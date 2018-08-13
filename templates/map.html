@@ -27,7 +27,7 @@
     <script type="text/javascript">
             var $test_btn = $("#test_btn");
             var $console = $("#console");
-            var SERVER_URL = "http://172.30.1.59:1880";
+            var SERVER_URL = "http://125.152.164.198:1880";
 
             $test_btn.on("click", function () {
                 alert("btn_clicked");
@@ -49,9 +49,9 @@
                 var longitude;//경도
 
                 get_location.done(function( data ) {
-                    var data_ary = data.split(/\r\n|\r|\n/);
-                    latitude = data_ary[0];
-                    longitude = data_ary[1];
+                    var json_data = JSON.parse(data);
+                    latitude = json_data['latitude'];
+                    longitude = json_data['longitude'];
                     addConsoleRow("latitude(위도) : ", latitude);
                     addConsoleRow("longitude(경도) : ", longitude);
 

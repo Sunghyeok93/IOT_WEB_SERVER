@@ -38,7 +38,6 @@ def test():
     file = request.files['abc']
     filename = file.filename
     file.save('/Users/sunghyeok/video_streaming/static/pic.jpg')
-    print(json)
     print(file)
     #print(json)
     data = {

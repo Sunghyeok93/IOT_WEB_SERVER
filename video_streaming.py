@@ -1,5 +1,6 @@
 from flask import Flask, render_template, Response, request
 from flask_cors import CORS
+from yolo import detect_image
 import os
 
 app = Flask(__name__)
@@ -31,19 +32,15 @@ def location():
 def path():
     return render_template('path.html')
 
-@app.route('/test', methods=["POST"])
+@app.route('/image', methods=["POST"])
 def test():
-    print(request.data)
-    json = request.form
     file = request.files['abc']
     filename = file.filename
-    file.save('/Users/sunghyeok/video_streaming/static/pic.jpg')
-    print(file)
-    #print(json)
+    file.save('/home/ubuntu/image.jpg')
+    result = image_detect('/home/ubuntu/image.jpg')
     data = {
         'status': 200
     }
-    #js = json.dumps(data)
     return Response(status=200, mimetype='application/json')
 
 if __name__ == '__main__':

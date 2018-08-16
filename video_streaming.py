@@ -51,11 +51,8 @@ def test():
 
     str_result = str_result + '있습니다'
 
-    data = {
-        'status': 200
-    }
     print(str_result)
-    return Response(str_result,status=200, mimetype='application/json')
+    return Response(str_result,status=200, mimetype='text/plain')
 
 @app.route('/gps')
 def receive_gps():
@@ -66,14 +63,14 @@ def receive_gps():
     f.write(''.join(json.dumps(gps)))
     f.close
     print(lat+ ' ' + lon)
-    return Response(json.dumps({'lat':lat, 'lon':lon}))
+    return Response(json.dumps({'lat':lat, 'lon':lon}), status=200)
 
 @app.route('/gpsartik')
 def send_gps():
     f = open('/home/ubuntu/gps.txt','r')
     gps = f.readlines()
     print(gps)
-    return Response(gps)
+    return Response(gps, status=200)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

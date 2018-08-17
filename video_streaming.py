@@ -67,10 +67,16 @@ def receive_gps():
 
 @app.route('/gpsartik')
 def send_gps():
-    f = open('/home/ubuntu/gps.txt','r')
-    gps = f.readlines()
-    print(gps)
-    return Response(gps, status=200)
+    try:
+        f = open('/home/ubuntu/gps.txt','r')
+        gps = f.readlines()
+        f.close()
+    except IOError:
+	#gps 파일 오픈에 실패할 경우 광화문 좌표를 줌
+        gps = '{"longitude": "126.976799", "latitude": "37.574071"}'
+    finally:
+        print(gps)
+        return Response(gps, status=200)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

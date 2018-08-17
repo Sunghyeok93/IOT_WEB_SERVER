@@ -44,14 +44,14 @@ def test():
     filename = file.filename
     file.save('/home/ubuntu/image.jpg')
     result = detect_image('/home/ubuntu/image.jpg')
-    str_result = ''
-
-    for i in result:
-        str_result=str_result + translateEtoK.get(i['class'], '') + ' '
-
-    str_result = str_result + '있습니다'
-
-    print(str_result)
+    if result is not '':
+        str_result = ''
+        for i in result:
+            str_result=str_result + translateEtoK.get(i['class'], '') + ' '
+        str_result = str_result + '있습니다'
+        print(str_result)
+    else:
+        str_result = '인식된 주요 물체가 없습니다'
     return Response(str_result,status=200, mimetype='text/plain')
 
 @app.route('/gps')

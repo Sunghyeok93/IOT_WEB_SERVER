@@ -15,6 +15,21 @@ db = pymysql.connect(host='maria.cmzkdevatf0t.ap-northeast-2.rds.amazonaws.com',
 curs = db.cursor()
 sql = ""
 
+
+def get_frame(filename):
+    while True:
+        try:
+            file = request.files['abc']
+            file.save('/home/ubuntu/' + filename)
+      #      yield(file)
+        except IOError:
+            print("파일 저장 에러")
+
+def video_gen(filename):
+    while True:
+        frame = get_frame(filename)
+        yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 # No caching at all for API endpoints.
 @app.after_request
 def add_header(response):
@@ -30,6 +45,14 @@ def index():
     #print(json['data'])
     return render_template('index.html')
 
+
+"""
+@app.route('/videostream')
+def video_stream():
+    return Response(get_frame(streaming.jpg), 
+"""
+
+
 @app.route('/location')
 def location():
     return render_template('map.html')
@@ -40,9 +63,7 @@ def path():
 
 @app.route('/image', methods=["POST"])
 def test():
-    file = request.files['abc']
-    filename = file.filename
-    file.save('/home/ubuntu/image.jpg')
+    get_frame(image.jpg)
     result = detect_image('/home/ubuntu/image.jpg')
     if result is not '':
         str_result = ''

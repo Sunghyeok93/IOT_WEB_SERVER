@@ -12,10 +12,10 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 CORS(app)
 
 
-def get_frame(filename):
+def get_frame(filename, request_code):
     while True:
         try:
-            file = request.files['abc']
+            file = request.files[request_code]
             file.save('/home/ubuntu/' + filename)
             yield(file)
         except IOError:
@@ -23,7 +23,7 @@ def get_frame(filename):
 
 def video_gen(filename):
     while True:
-        frame = get_frame(filename)
+        frame = get_frame(filename,'abc')
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 # No caching at all for API endpoints.
@@ -60,7 +60,7 @@ def path():
 
 @app.route('/image', methods=["POST"])
 def test():
-    get_frame(image.jpg)
+    get_frame(image.jpg, 'abc')
     result = detect_image('/home/ubuntu/image.jpg')
     if result is not '':
         str_result = ''

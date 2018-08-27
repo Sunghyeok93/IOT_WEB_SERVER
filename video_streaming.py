@@ -12,14 +12,28 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 CORS(app)
 
 
-def get_frame(filename, request_code):
+def get_frame(filename, request_code, is_it_stream):
+    try:
+         file = request.files[request_code]
+         file.save('/home/ubuntu/' + filename)
+         yield(file)
+    except IOError:
+         printint("파일 저장 에러")
+
+#while 없이 테스트
+""" 
     while True:
         try:
             file = request.files[request_code]
             file.save('/home/ubuntu/' + filename)
             yield(file)
+            if is_it_stream == False:
+                break
         except IOError:
             print("파일 저장 에러")
+            break
+"""
+
 
 def video_gen(filename):
     while True:
@@ -42,13 +56,10 @@ def index():
     return render_template('index.html')
 
 
-
+# =================VIDEOSTREAM TEST=====================
 @app.route('/videostream')
-def video_stream():
-    return Response(get_frame(streaming.jpg), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
-
+def videostream():
+    return Response(video_gen(streaming.jpg), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/location')
 def location():

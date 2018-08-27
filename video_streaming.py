@@ -11,6 +11,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 #cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
 CORS(app)
 
+video = ""
 
 def get_frame(filename):
     try:
@@ -56,9 +57,15 @@ def index():
 
 
 # =================VIDEOSTREAM TEST=====================
-@app.route('/videostream', methods=["POST"]) # 아틱->서버 : 비디오스트리밍
+@app.route('/videostream', methods=["POST"]) # 아틱-> 서버 : 비디오스트리밍
 def videostream():
-     return Response(get_frame('video.jpg'), mimetype='multipart/x-mixed-replace; boundary=frame')
+    video = video_gen('video.jpg')
+    print(video)
+    return Response('video.jpg', status=200, mimetype='text/plain')
+
+@app.route('/videostreaming', methods=["GET"]) # 서버 -> 웹 : 비디오스트리밍
+def videostreaming():
+    return Response(video, mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/video') # 보호자 -> 웹 : 비디오스트리밍  조회

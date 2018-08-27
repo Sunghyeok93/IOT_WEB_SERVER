@@ -56,10 +56,10 @@ def index():
 
 
 # =================VIDEOSTREAM TEST=====================
-@app.route('/videostream') # 아틱->서버 : 비디오스트리밍
+@app.route('/videostream', methods=["POST"]) # 아틱->서버 : 비디오스트리밍
 def videostream():
-     return Response(get_frame('streamingtest.jpg'), mimetype='multipart/x-mixed-replace; boundary=frame')
-#     return Response(video_gen(streamingtest.jpg), mimetype='multipart/x-mixed-replace; boundary=frame')
+     return Response(get_frame('video.jpg'), mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @app.route('/video') # 보호자 -> 웹 : 비디오스트리밍  조회
 def video():

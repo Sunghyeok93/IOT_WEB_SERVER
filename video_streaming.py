@@ -15,10 +15,14 @@ video = ""
 
 def get_frame(filename):
     try:
+         print('get_frame : 안')
          file = request.files['abc']
+         print('get_frame : request 지나감')
          file.save('/home/ubuntu/IOT_WEB_SERVER/' + filename)
+         print('get_frame : save 지나감')
     except IOError:
-         printint("파일 저장 에러")
+         print("get_frame : 파일 저장 에러")
+    return file
 
 #while 없이 테스트
 """ 
@@ -36,11 +40,18 @@ def get_frame(filename):
 
 
 def video_gen(filename):
-    while True:
-        frame = get_frame(filename)
-        yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    try:
+        print('video_gen : 안')
+        file = request.files['abc']
+        print('video_gen : request 지나감')
+        file.save('/home/ubuntu/IOT_WEB_SERVER/' + filename)
+    except IOError:
+        print("파일 저장 에러")
+#    finally:
+#     video = (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + file + b'\r\n')
 
 # No caching at all for API endpoints.
+
 @app.after_request
 def add_header(response):
     # response.cache_control.no_store = True
@@ -59,9 +70,9 @@ def index():
 # =================VIDEOSTREAM TEST=====================
 @app.route('/videostream', methods=["POST"]) # 아틱-> 서버 : 비디오스트리밍
 def videostream():
-    video = video_gen('video.jpg')
-    print(video)
-    return Response('video.jpg', status=200, mimetype='text/plain')
+    print('videostrem : 안')
+    #video_gen('video.jpg')
+    return Response(video_gen('video.jpg'), status=200, mimetype='text/plain')
 
 @app.route('/videostreaming', methods=["GET"]) # 서버 -> 웹 : 비디오스트리밍
 def videostreaming():

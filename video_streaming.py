@@ -12,10 +12,10 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 CORS(app)
 
 
-def get_frame(filename, request_code, is_it_stream):
+def get_frame(filename):
     try:
-         file = request.files[request_code]
-         file.save('/home/ubuntu/' + filename)
+         file = request.files['abc']
+         file.save('/home/ubuntu/IOT_WEB_SERVER/' + filename)
     except IOError:
          printint("파일 저장 에러")
 
@@ -36,7 +36,7 @@ def get_frame(filename, request_code, is_it_stream):
 
 def video_gen(filename):
     while True:
-        frame = get_frame(filename,'abc')
+        frame = get_frame(filename)
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 # No caching at all for API endpoints.
@@ -58,7 +58,8 @@ def index():
 # =================VIDEOSTREAM TEST=====================
 @app.route('/videostream') # 아틱->서버 : 비디오스트리밍
 def videostream():
-    return Response(video_gen(streaming.jpg), mimetype='multipart/x-mixed-replace; boundary=frame')
+     return Response(get_frame('streamingtest.jpg'), mimetype='multipart/x-mixed-replace; boundary=frame')
+#     return Response(video_gen(streamingtest.jpg), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video') # 보호자 -> 웹 : 비디오스트리밍  조회
 def video():
@@ -74,8 +75,8 @@ def path():
 
 @app.route('/image', methods=["POST"]) # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
 def test():
-    get_frame(image.jpg, 'abc')
-    result = detect_image('/home/ubuntu/image.jpg')
+    get_frame('yolo.jpg')
+    result = detect_image('/home/ubuntu/IOT_WEB_SERVER/yolo.jpg')
     if result is not '':
         str_result = ''
         for i in result:

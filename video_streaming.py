@@ -16,7 +16,6 @@ def get_frame(filename, request_code, is_it_stream):
     try:
          file = request.files[request_code]
          file.save('/home/ubuntu/' + filename)
-         yield(file)
     except IOError:
          printint("파일 저장 에러")
 
@@ -57,19 +56,23 @@ def index():
 
 
 # =================VIDEOSTREAM TEST=====================
-@app.route('/videostream')
+@app.route('/videostream') # 아틱->서버 : 비디오스트리밍
 def videostream():
     return Response(video_gen(streaming.jpg), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/location')
+@app.route('/video') # 보호자 -> 웹 : 비디오스트리밍  조회
+def video():
+    return render_template('video.html')
+
+@app.route('/location') # 보호자 -> 웹 : gps 조회
 def location():
     return render_template('map.html')
 
-@app.route('/path')
+@app.route('/path') # 보호자 -> 웹 : 길찾기 경로 조회
 def path():
     return render_template('path.html')
 
-@app.route('/image', methods=["POST"])
+@app.route('/image', methods=["POST"]) # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
 def test():
     get_frame(image.jpg, 'abc')
     result = detect_image('/home/ubuntu/image.jpg')
@@ -83,7 +86,7 @@ def test():
         str_result = '인식된 주요 물체가 없습니다'
     return Response(str_result,status=200, mimetype='text/plain')
 
-@app.route('/gps')
+@app.route('/gps') # 안드로이드 -> 서버 : gps 저장
 def receive_gps():
     lat = request.args.get('latitude', '')
     lon = request.args.get('longitude', '')
@@ -94,7 +97,7 @@ def receive_gps():
     print(lat+ ' ' + lon)
     return Response(json.dumps({'lat':lat, 'lon':lon}), status=200)
 
-@app.route('/gpsartik')
+@app.route('/gpsartik') # 서버 -> 아틱 : gps 전송
 def send_gps():
     try:
         f = open('/home/ubuntu/gps.txt','r')

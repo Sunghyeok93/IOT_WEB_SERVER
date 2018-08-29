@@ -11,7 +11,7 @@ except ImportError:
 
 
 class CameraEvent(object):
-  """An Event-like class that signals all active clients when a new frame is available.  """
+    """An Event-like class that signals all active clients when a new frame is available.  """
     def __init__(self):
         self.events = {}
 
@@ -57,7 +57,7 @@ class BaseCamera(object):
     event = CameraEvent()
 
     def __init__(self):
-                """Start the background camera thread if it isn't running yet."""
+        """Start the background camera thread if it isn't running yet."""
         if BaseCamera.thread is None:
             BaseCamera.last_access = time.time()
 
@@ -81,7 +81,7 @@ class BaseCamera(object):
 
     @staticmethod
     def frames():
-                """"Generator that returns frames from the camera."""
+        """"Generator that returns frames from the camera."""
         raise RuntimeError('Must be implemented by subclasses.')
 
     @classmethod

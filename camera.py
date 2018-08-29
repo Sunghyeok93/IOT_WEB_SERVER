@@ -16,7 +16,6 @@ class Camera(BaseCamera):
     @staticmethod
     def get_newest_img():
         conn = DBconnect()
-        conn.insertImage(str(123456), 'abc.png', "123")
         query = 'SELECT time, path, size FROM Image ORDER BY time DESC LIMIT 1 OFFSET 0;'
         image = conn.cursor.execute(query).fetchone()
         print(image['path'])

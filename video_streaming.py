@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response, request
 from flask_cors import CORS
 import DBconnect as DB
 import DBresponse as Resp
-#from yolo import detect_image
+from yolo import detect_image
 import os
 import json
 
@@ -15,14 +15,14 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 #cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
 CORS(app)
 
-video = ""
+video_content = ""
 
 def get_frame(filename):
     try:
          print('get_frame : 안')
          file = request.files['abc']
          print('get_frame : request 지나감')
-         file.save('/home/ubuntu/IOT_WEB_SERVER/' + filename)
+         file.save('/home/ubuntu/IOT_WEB_SERVER/static/' + filename)
          print('get_frame : save 지나감')
     except IOError:
          print("get_frame : 파일 저장 에러")
@@ -45,14 +45,16 @@ def get_frame(filename):
 
 def video_gen(filename):
     try:
-        print('video_gen : 안')
-        file = request.files['abc']
-        print('video_gen : request 지나감')
-        file.save('/home/ubuntu/IOT_WEB_SERVER/' + filename)
+        while True:
+            print('video_gen : 안')
+            file = request.files['abc']
+            print('video_gen : request 지나감')
+            file.save('/home/ubuntu/IOT_WEB_SERVER/static/' + filename)
+            with open('/home/ubuntu/IOT_WEB_SERVER/static/'+filename, 'rb') as frame: 
+                pass
+                #yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
     except IOError:
         print("파일 저장 에러")
-#    finally:
-#     video = (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + file + b'\r\n')
 
 # No caching at all for API endpoints.
 
@@ -89,7 +91,6 @@ def messages():
 @app.route('/videostream', methods=["POST"]) # 아틱-> 서버 : 비디오스트리밍
 def videostream():
     print('videostrem : 안')
-    #video_gen('video.jpg')
     return Response(video_gen('video.jpg'), status=200, mimetype='text/plain')
 
 @app.route('/videostreaming', methods=["GET"]) # 서버 -> 웹 : 비디오스트리밍
@@ -112,7 +113,7 @@ def path():
 @app.route('/image', methods=["POST"]) # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
 def test():
     get_frame('yolo.jpg')
-    result = detect_image('/home/ubuntu/IOT_WEB_SERVER/yolo.jpg')
+    result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/yolo.jpg')
     if result is not '':
         str_result = ''
         for i in result:

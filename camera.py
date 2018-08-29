@@ -20,4 +20,4 @@ class Camera(BaseCamera):
         image = Camera.conn.select_newest_img()
         if image is None:
             raise FileNotFoundError('image not found')
-        return open(image['path'], 'rb').read()
+        return open(image['path'], 'rb').read(-1)

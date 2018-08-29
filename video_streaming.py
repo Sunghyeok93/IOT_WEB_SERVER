@@ -26,35 +26,17 @@ def get_frame(filename):
          print('get_frame : save 지나감')
     except IOError:
          print("get_frame : 파일 저장 에러")
-    return file
+    return 200
 
-#while 없이 테스트
-""" 
-    while True:
-        try:
-            file = request.files[request_code]
-            file.save('/home/ubuntu/' + filename)
-            yield(file)
-            if is_it_stream == False:
-                break
-        except IOError:
-            print("파일 저장 에러")
-            break
-"""
 
 
 def video_gen(filename):
-    try:
-        while True:
-            print('video_gen : 안')
-            file = request.files['abc']
-            print('video_gen : request 지나감')
-            file.save('/home/ubuntu/IOT_WEB_SERVER/static/' + filename)
-            with open('/home/ubuntu/IOT_WEB_SERVER/static/'+filename, 'rb') as frame: 
-                pass
-                #yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-    except IOError:
-        print("파일 저장 에러")
+    while True:
+        print('video_gen : 안')
+        with open('/home/ubuntu/IOT_WEB_SERVER/static/'+filename, 'rb') as frame: 
+            print('type of frame : ' + str(type(frame.read(-1))))
+            # pass
+            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame.read(-1) + b'\r\n')
 
 # No caching at all for API endpoints.
 
@@ -91,16 +73,16 @@ def messages():
 @app.route('/videostream', methods=["POST"]) # 아틱-> 서버 : 비디오스트리밍
 def videostream():
     print('videostrem : 안')
-    return Response(video_gen('video.jpg'), status=200, mimetype='text/plain')
+    return Response(status=get_frame('video.jpg'), mimetype='text/plain')
 
 @app.route('/videostreaming', methods=["GET"]) # 서버 -> 웹 : 비디오스트리밍
 def videostreaming():
-    return Response(video, mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(video_gen('video.jpg'), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/video') # 보호자 -> 웹 : 비디오스트리밍  조회
 def video():
-    return render_template('video.html')
+    return render_template('old_video.html')
 
 @app.route('/location') # 보호자 -> 웹 : gps 조회
 def location():

@@ -1,35 +1,29 @@
 import sqlite3
 
-
-
 class DBconnect():
 
     def __init__(self):
-        self.connect = sqlite3.connect('./iot.db')
+        self.connect = sqlite3.connect('./iot.db', check_same_thread=False)
+        self.cursor = self.connect.cursor()
 
-
-    def insertMessage(time, content, sender):
-        cursor = self.connect.cursor()
+    def insertMessage(self, time, content, sender):
         query = "INSERT INTO Message(time, content, sender) Values(" + time + "," + content + "," + sender + ");"
-        return cursor.execute(query)
+        return self.cursor.execute(query)
 
     
-    def insertImage(time, path, size):
-        cursor = self.connect.cursor()
+    def insertImage(self, time, path, size):
         query = "INSERT INTO Image(time, path, size) Values(" + time + "," + path + "," + size + ");"
-        return cursor.execute(query)
+        return self.cursor.execute(query)
 
     
-    def selectMessage():
-        cursor = self.connect.cursor()
+    def selectMessage(self):
         query = "SELECT * FROM Message"
-        cursor.execute(query)
-        return cursor.fetchall()
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 
 
-    def selectMessage():
-        cursor = self.connect.cursor()
+    def selectPhoto(self):
         query = "SELECT * FROM Image"
-        cursor.execute(query)
-        return cursor.fetchall()
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 

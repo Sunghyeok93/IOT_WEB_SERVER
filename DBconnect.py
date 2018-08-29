@@ -27,3 +27,7 @@ class DBconnect():
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def select_newest_img(self):
+        query = 'SELECT time, path, size FROM Image ORDER BY time DESC LIMIT 1 OFFSET 0;'
+        self.cursor.execute(query)
+        return self.cursor.fetchone()

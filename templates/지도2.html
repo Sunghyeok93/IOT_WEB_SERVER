@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>IOT 이노베이션 </title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
+        <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=20d0f4ec-fefc-4025-84fa-292675965fab"></script>
+        <style>
+            #map_div {
+                display: none;
+            }
+            #map_div.active {
+                display: block;
+            }
+             html, body{height:100%;}
+* {
+    margin:0;
+    padding:0;
+}
+main {
+    overflow:hidden;
+    width:100%;
+    height:60%;
+    float:left;
+}
+footer {
+    height:20%;
+    clear:both;
+    margin-top:20px;
+    background-color:#ffffff;
+}
+
+      div.msg_bbl {
+        background-color: #ddd;
+        padding: 5px 10px;
+        border-radius: 10px;
+        color: #555;
+        margin-bottom: 5px;
+      }
+      header {
+    height:20%;
+    background-color:#FFFFFF;
+}
+logo {
+    position:absolute;
+    top:2%;
+    left:50%;
+    transform:translateX(-15%);
+}
+top_menu {
+    position:absolute;
+    top:20px;
+    right:5%;
+    font-size: 0.5em;
+    color:#0B614B;
+}
+main_menu {
+    position:absolute;
+    top:16%;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:1.5em;
+    color:#0B614B;
+    font-weight:bold;
+}
+main_menu li {
+    display:inline;
+    margin-left:30px;
+}
+      a{
+    color:#0B614B;
+    text-decoration:none;
+}
+a:hover{
+    text-decoration:underline;
+   }
+        </style>
+    </head>
+    <body>
+     <header>
+    <logo>
+      <a href="http://localhost:5000/jiah"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
+    </logo>
+    <top_menu>
+      HOME | NOTICE | LOGIN | JOIN
+    </top_menu>
+    <main_menu>
+      <ul>
+       <!-- <li onclick="location.href='http://localhost:5000/';">&nbsp; NAVIGATION &nbsp; </li>-->
+          <li><a href="http://localhost:5000/map">&nbsp; NAVIGATION &nbsp; </a></li>
+          <li><a href="http://localhost:5000/streaming">&nbsp; RECOGNITION &nbsp;</a></li>
+          <li><a href="http://localhost:5000/"> MESSAGING </a></li>
+          <li><a href="http://localhost:5000/Board_List">&nbsp;BOARD&nbsp;</a></li>
+      </ul>
+    </main_menu>
+
+  </header>
+     <main>
+        <div id="map_div"></div>
+        <button id="btn-Tmap">Tmap
+            <span>a</span>
+        </button>
+        <div id="console" style="border: 2px solid dodgerblue; background: gray; color: #fff;"></div>
+        <div>
+            <input type="submit" value="요청" id="test_btn">
+        </div>
+     </main>
+    <footer>
+    <img src="static/address.png">
+  </footer>
+    </body>
+    <script type="text/javascript">
+            var $test_btn = $("#test_btn");
+            var $console = $("#console");
+            var SERVER_URL = "http://172.30.1.59:1880";
+
+            $test_btn.on("click", function () {
+                alert("btn_clicked");
+                var posting = $.get( SERVER_URL + "/file");
+                posting.done(function( data ) {
+                    alert("finish!");
+                    addConsoleRow("data : ", data);
+                });
+            });
+
+            function addConsoleRow(type, data) {
+                console.log(data);
+                $console.append("<div>"+ type + " : "+ JSON.stringify(data)+"</div>");
+            }
+
+            function initTmap(){
+                var get_location = $.get( SERVER_URL + "/file"); //아틱 http 통신
+                var latitude;//위도
+                var longitude;//경도
+
+                get_location.done(function( data ) {
+                    var data_ary = data.split(/\r\n|\r|\n/);
+                    latitude = data_ary[0];
+                    longitude = data_ary[1];
+                    addConsoleRow("latitude(위도) : ", latitude);
+                    addConsoleRow("longitude(경도) : ", longitude);
+
+                    var map = new Tmap.Map({
+					    div:'map_div',
+					    width : "934px",
+					    height : "452px",
+				    });
+                    map.setCenter(new Tmap.LonLat(longitude, latitude).transform("EPSG:4326", "EPSG:3857"), 15);
+
+                    markerLayer = new Tmap.Layer.Markers();//마커 레이어 생성
+                    map.addLayer(markerLayer);//map에 마커 레이어 추가
+
+                    var lonlat = new Tmap.LonLat(parseFloat(longitude), parseFloat(latitude)).transform("EPSG:4326", "EPSG:3857");//좌표 설정
+                    var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+                    var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));//아이콘 중심점 설정
+                    var icon = new Tmap.Icon('http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',size, offset);//마커 아이콘 설정
+
+                    marker = new Tmap.Marker(lonlat, icon);//마커 생성
+                    markerLayer.addMarker(marker);//레이어에 마커 추가
+                });
+			}
+    </script>
+    <script type="text/javascript">
+            var bDisplay = false;
+            var btnTmap = document.querySelector("#btn-Tmap");
+            var map = document.querySelector("#map_div");
+
+            btnTmap.addEventListener("click", function () {
+                if(!bDisplay){
+                    initTmap();
+                    bDisplay = true;
+                    map.classList.toggle("active");
+                }else {
+                    map.classList.toggle("active");
+                }
+            }, false);
+    </script>
+</html>

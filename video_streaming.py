@@ -6,7 +6,6 @@ from yolo import detect_image
 import camera
 import json
 from camera import Camera
-from datetime import datetime
 import time
 import os
 
@@ -20,17 +19,17 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 #cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
 CORS(app)
 imagePath = '/home/ubuntu/IOT_WEB_SERVER/static/'
-imageSQLPath = '"/"home"/"ubuntu"/"IOT_WEB_SERVER"/"static"/"'
 
 
-def get_frame(imageName):
+def get_frame(imageName, isDB):
     try:
          filePath = imagePath + imageName
          print('get_frame : 안')
          file = request.files['abc']
          print('get_frame : request 지나감')
          file.save(filePath)
-         db.insertImage(str(time.time()), imageName, str(os.path.getsize(filePath)))
+         if isDB is True:
+             db.insertImage(imageName, imageName+'.jpg', str(os.path.getsize(filePath)))
          print('get_frame : save 지나감')
     except IOError:
          print("get_frame : 파일 저장 에러")
@@ -83,7 +82,7 @@ def messages():
 @app.route('/videostream', methods=["POST"]) # 아틱-> 서버 : 비디오스트리밍
 def videostream():
     print('videostrem : 안')
-    return Response(status=get_frame(str(datetime.now()) + ".jpg"), mimetype='text/plain')
+    return Response(status=get_frame(str(time.time()),True), mimetype='text/plain')
 
 
 @app.route('/videostream', methods=["GET"]) # 서버 -> 웹 : 비디오스트리밍
@@ -105,7 +104,7 @@ def path():
 
 @app.route('/image', methods=["POST"]) # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
 def test():
-    get_frame('yolo.jpg')
+    get_frame('yolo.jpg',False)
     result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/yolo.jpg')
     if result is not '':
         str_result = ''

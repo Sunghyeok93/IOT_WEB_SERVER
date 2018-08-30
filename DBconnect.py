@@ -12,7 +12,8 @@ class DBconnect():
 
     
     def insertImage(self, time, path, size):
-        query = "INSERT INTO Image(time, path, size) Values(" + time + "," + path + "," + size + ");"
+        query = "INSERT INTO Image (time, path, size) VALUES ('" + time + "','" + path + "','" + size + "');"
+        print(query)
         return self.cursor.execute(query)
 
     

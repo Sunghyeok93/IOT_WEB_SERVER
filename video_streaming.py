@@ -46,10 +46,11 @@ def get_frame(imageName, isDB):
     return 200
 
 
-def video_gen():
+def video_gen(cam):
     while True:
         print('video_gen : 안')
-        yield Camera.frames()
+        frame = cam.get_frame()
+        yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         """
         with open('/home/ubuntu/IOT_WEB_SERVER/static/'+filename, 'rb') as frame: 
             print('type of frame : ' + str(type(frame.read(-1))))
@@ -100,7 +101,8 @@ def videostream():
 
 @app.route('/videostream', methods=["GET"])  # 서버 -> 웹 : 비디오스트리밍
 def gen_video():
-    return Response(video_gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    cam = Camera()
+    return Response(video_gen(cam), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/video')  # 보호자 -> 웹 : 비디오스트리밍  조회

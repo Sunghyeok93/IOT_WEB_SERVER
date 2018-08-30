@@ -30,7 +30,6 @@ def get_frame(imageName):
          file = request.files['abc']
          print('get_frame : request 지나감')
          file.save(filePath)
-         print((str(time.time()), filePath,str(os.path.getsize(filePath))))
          db.insertImage(str(time.time()), imageName, str(os.path.getsize(filePath)))
          print('get_frame : save 지나감')
     except IOError:

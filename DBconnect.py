@@ -10,7 +10,7 @@ class DBconnect():
         isRead = 0
         if sender is not "ARTIK":
             isRead = 1
-        query = "INSERT INTO Message(time, content, sender, isRead) Values(" + time + "," + content + "," + sender + "," + isRead + ");"
+        query = "INSERT INTO Message(time, content, sender, isRead) Values(" + time + "," + content + "," + sender + "," + str(isRead) + ");"
         return self.cursor.execute(query)
 
     def getMessageNotRead(self):
@@ -19,7 +19,8 @@ class DBconnect():
         return self.cursor.fetchall()
 
     def modifyMessageIsRead(self, num, isRead):
-        query = "UPDATE Message SET isRead = " + isRead + " WHERE num = " + num + ";"
+        query = "UPDATE Message SET isRead = " + str(isRead) + " WHERE num = " + str(num) + ";"
+        self.cursor.execute(query)
         return 0;    
 
     def getMessageContent(self, num):

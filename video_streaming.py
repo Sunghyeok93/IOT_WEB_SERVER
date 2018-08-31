@@ -131,8 +131,8 @@ def get_mail():
     message_not_read = db.getMessageNotRead()
     if len(message_not_read) is 0:
         return Response("읽지 않은 메시지가 없습니다.", status=200, mimetype='text/plain')
-    message = str(len(message_not_read)) + "개의 메시지가 남았습니다." + "메시지를 읽겠습니다." + db.getMessageContent(self, message_not_read[0])
-    db.modifyMessageIsRead(message_not_read[0], 1)
+    message = str(len(message_not_read)) + "개의 메시지가 남았습니다." + "메시지를 읽겠습니다." + str(db.getMessageContent(message_not_read[0][0]))
+    db.modifyMessageIsRead(message_not_read[0][0], 1)
     return Response(message, status=200, mimetype='text/plain')
 
 @app.route('/image', methods=["POST"])  # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행

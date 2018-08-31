@@ -69,13 +69,6 @@ def add_header(response):
     response.headers['Expires'] = '-1'
     return response
 
-
-@app.route('/')
-def index():
-    # json = request.form
-    # print(json['data'])
-    return render_template('index.html')
-
 # ==================Homepage Route======================
 
 
@@ -102,15 +95,9 @@ def gen_video():
     cam = Camera()
     return Response(video_gen(cam), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-
 @app.route('/video')  # 보호자 -> 웹 : 비디오스트리밍  조회
 def video():
     return render_template('old_video.html')
-
-
-@app.route('/location')  # 보호자 -> 웹 : gps 조회
-def location():
-    return render_template('map.html')
 
 @app.route('/path')  # 보호자 -> 웹 : 길찾기 경로 조회
 def path():
@@ -162,7 +149,6 @@ def receive_gps():
     print(lat + ' ' + lon)
     return Response(json.dumps({'lat':lat, 'lon':lon}), status=200)
 
-
 @app.route('/gpsartik')  # 서버 -> 아틱 : gps 전송
 def send_gps():
     try:
@@ -175,17 +161,6 @@ def send_gps():
     finally:
         print(gps)
         return Response(gps, status=200)
-
-#메시징코드
-
-# No caching at all for API endpoints.
-@app.after_request
-def add_header(response):
-    # response.cache_control.no_store = True
-    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = '-1'
-    return response
 
 @app.route( '/' )
 def hello():

@@ -36,7 +36,7 @@ class DBconnect():
         return self.cursor.fetchall()
 
     def selectPhoto(self):
-        query = "SELECT * FROM Image"
+        query = "SELECT * FROM Image WHERE path LIKE '%photo%';"
         self.cursor.execute(query)
         return self.cursor.fetchall()
 

@@ -16,7 +16,7 @@ db = DB.DBconnect()
 resp = Resp.DBresponse()
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(app, supports_credentials=True)
 CORS(app)
 imagePath = '/home/ubuntu/IOT_WEB_SERVER/static/'
 

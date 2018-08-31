@@ -49,7 +49,7 @@ class DBconnect():
         query=""
         if table == "Message":
             query = "SELECT * FROM Message WHERE content LIKE '%" +content + "%';"
-        else:
+        else: # Image
             query = "SELECT * FROM Message WHERE time LIKE '%" +    content + "%';"
         self.cursor.execute(query)
         return self.cursor.fetchall()

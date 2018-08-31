@@ -7,6 +7,7 @@ import camera
 import json
 from camera import Camera
 import time
+from time import gmtime, strftime
 import os
 
 translateEtoK = { 'person':'사람', 'bicycle':'자전거', 'car':'자동차', 'motorbike':'오토바이', 'aeroplane':'비행기', 'bus':'버스', 'train':'전철', 'truck':'트럭', 'boat':'보트', 'traffic light':'신호등', 'fire hydrant':'소화전', 'stop sign':'정지 표지판', 'parking meter':'계량기', 'bench':'벤치', 'bird':'새', 'cat':'고양이', 'dog':'개', 'horse':'말', 'sheep':'양', 'cow':'소', 'elephant':'코끼리', 'bear':'곰', 'zebra':'얼룩말', 'giraffe':'기린', 'backpack':'가방', 'umbrella':'우산', 'handbag':'핸드백', 'tie':'넥타이', 'suitcase':'서류가방', 'frisbee':'원반', 'skis':'스키', 'snowboard':'스노우보드', 'sports ball':'공', 'kite':'연', 'baseball bat':'방망이', 'baseball glove':'장갑', 'skateboard':'스케이트보드', 'surfboard':'서핑보드', 'tennis racket':'테니스라켓', 'bottle':'유리병', 'wine glass':'유리컵', 'cup':'컵', 'fork':'포크', 'knife':'나이프', 'spoon':'숟가락', 'bowl':'그릇', 'banana':'바나나', 'apple':'사과', 'sandwich':'샌드위치', 'orange':'오렌지', 'broccoli':'브로콜리', 'carrot':'당근', 'hot dog':'핫도그', 'pizza':'피자', 'donut':'도넛', 'cake':'케이크', 'chair':'의자', 'sofa':'소파', 'pottedplant':'화분', 'bed':'침대', 'diningtable':'식탁', 'toilet':'화장실', 'tvmonitor':'모니터', 'laptop':'노트북', 'mouse':'마우스', 'remote':'리모컨', 'keyboard':'키보드', 'cell phone':'핸드폰', 'microwave':'전자렌지', 'oven':'오븐', 'toaster':'토스터기', 'sink':'싱크대', 'refrigerator':'냉장고', 'book':'책', 'clock':'시계', 'vase':'병', 'scissors':'가위', 'teddy bear':'곰인형', 'hair drier':'헤어드라이어', 'toothbrush':'칫솔' }
@@ -89,7 +90,6 @@ def messages():
     messageList = db.selectMessage()
     return resp.messageResponse(200, messageList)
 
-
 # =================VIDEOSTREAM TEST=====================
 @app.route('/videostream', methods=["POST"])  # 아틱-> 서버 : 비디오스트리밍
 def videostream():
@@ -116,19 +116,24 @@ def location():
 def path():
     return render_template('path.html')
 
-@app.route('/message') # 보호자 -> 웹 : 음성사서함
-def voicemail():
-    return render_template('메시징.html')
-
-@app.route('/voicemail', methods=["POST"]) # 아틱 -> 서버 : 음성입력
+@app.route('/voicemail', methods=["POST"]) # * -> 서버 : 음성입력
 def send_mail():
-    pass
+    content = request.form('content')
+    sender = request.form('sender')
+    isRead = 1
+    if sender is 'ARTIK':
+        isRead = 0
+    db.insertMessage(strftime("%Y-%m-%d %H:%M:%S", gmtime()), content, sender, isRead)
     return Response(status=200)
 
-@app.route('/voicemail', methods=["GET"]) # 아틱 -> 서버 : 음성받음
+@app.route('/voicemail', methods=["GET"]) # 서버 -> 아틱 : 음성받음
 def get_mail():
-    pass
-    return Response(status=200)
+    message_not_read = db.getMessageNotRead()
+    if len(message_not_read) is 0:
+        return Response("읽지 않은 메시지가 없습니다.", status=200, mimetype='text/plain')
+    message = str(len(message_not_read)) + "개의 메시지가 남았습니다." + "메시지를 읽겠습니다." + db.getMessageContent(self, message_not_read[0])
+    db.modifyMessageIsRead(message_not_read[0], 1)
+    return Response(message, status=200, mimetype='text/plain')
 
 @app.route('/image', methods=["POST"])  # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
 def test():

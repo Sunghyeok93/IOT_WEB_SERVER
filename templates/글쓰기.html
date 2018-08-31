@@ -2,10 +2,10 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="static/common.css">
-<link rel="stylesheet" type="text/css" href="static/header.css">
-<link rel="stylesheet" type="text/css" href="static/footer.css">
 <link rel="stylesheet" type="text/css" href="static/board_left.css">
 <link rel="stylesheet" type="text/css" href="static/board_write_main.css">
+          <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
+
 <meta charset="utf-8">
 <style>
 html, body{height:100%;}
@@ -81,9 +81,23 @@ a:hover{
 </style>
 </head>
 <script>
+var SERVER_URL="http://54.180.8.155:5000";
     function button1_click(){
         location.replace("https://localhost:5000/");
     }
+    function text(){
+      var $text=$("#content_text");
+      console.log(text);
+
+      var posting = $.post(SERVER_URL + "/voicemail", {
+        content : $text.val(),
+        sender : "Homepage"
+      });
+      posting.done(function(data){
+        alert('done');
+        location.href="http://localhost:5000/Board_List";
+        });
+}
 </script>
 <body>
   <header>
@@ -109,25 +123,19 @@ a:hover{
   <h2 id="board_title">자유 게시판 </h2>
   <div id="write_title"><h2>글쓰기</h2></div>
   <table>
-    <tr id="name">
-      <td class="col1">이름</td>
-      <td class="col2"><input type="text"></td>
-    </tr>
-    <tr id="subject">
-      <td class="col1">제목</td>
-      <td class="col2"><input type="text"></td>
-    </tr>
     <tr id="content">
       <td class="col1">내용</td>
-      <td class="col2"><textarea></textarea></td>
+      <td class="col2"><textarea id="content_text"></textarea></td>
     </tr>
-    <tr id="upload">
+
+
+    <!-- <tr id="upload">
       <td class="col1">업로드 파일</td>
       <td class="col2"><input type="text"> <input type="file"></td>
-    </tr>
+    </tr> -->
   </table>
   <div id="buttons">
-    <a href="#"><img src="static/ok.png"></a>
+    <a href="#"><img onclick="text()" src="static/ok.png"></a>
     <a href="http://localhost:5000/Board_List"><img src="static/list.png"></a>
   </div>
 </section>

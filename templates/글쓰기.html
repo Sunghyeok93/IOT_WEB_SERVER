@@ -95,24 +95,24 @@ var SERVER_URL="http://54.180.8.155:5000";
       });
       posting.done(function(data){
         alert('done');
-        location.href="http://localhost:5000/Board_List";
+        location.href='Board_List';
         });
 }
 </script>
 <body>
   <header>
     <logo>
-      <a href="http://localhost:5000/jiah"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
+      <a href="#" onclick="window.location.href='jiah'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
     </logo>
     <top_menu>
       HOME | NOTICE | LOGIN | JOIN
     </top_menu>
     <main_menu>
       <ul>
-           <li><a href="http://localhost:5000/map">&nbsp; NAVIGATION &nbsp; </a></li>
-          <li><a href="http://localhost:5000/streaming">&nbsp; RECOGNITION &nbsp;</a></li>
-          <li><a href="http://localhost:5000/"> MESSAGING </a></li>
-          <li><a href="http://localhost:5000/Board_List">&nbsp;BOARD&nbsp;</a></li>
+          <li>   <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
+          <li>   <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
+          <li>   <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
+          <li>   <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
       </ul>
     </main_menu>
 
@@ -136,7 +136,7 @@ var SERVER_URL="http://54.180.8.155:5000";
   </table>
   <div id="buttons">
     <a href="#"><img onclick="text()" src="static/ok.png"></a>
-    <a href="http://localhost:5000/Board_List"><img src="static/list.png"></a>
+    <a href='Board_List'><img src="static/list.png"></a>
   </div>
 </section>
   </main>

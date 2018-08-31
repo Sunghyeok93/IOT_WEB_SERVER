@@ -44,3 +44,13 @@ class DBconnect():
         query = 'SELECT time, path, size FROM Image ORDER BY time DESC LIMIT 1 OFFSET 0;'
         self.cursor.execute(query)
         return self.cursor.fetchone()
+
+    def search_content(self, table, content):
+        query=""
+        if table == "Message":
+            query = "SELECT * FROM Message WHERE content LIKE '%" +content + "%';"
+        else:
+            query = "SELECT * FROM Message WHERE time LIKE '%" +    content + "%';"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+

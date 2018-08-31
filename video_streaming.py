@@ -165,25 +165,25 @@ def send_gps():
 
 @app.route( '/' )
 def hello():
-  return render_template( '시작화면.html' )
+    return render_template( '시작화면.html' )
 
 @app.route( '/jiah' )
 def jiah():
-  return render_template( '시작화면.html' )
+    return render_template( '시작화면.html' )
 
 #게시판 목록
 @app.route( '/Board_List' )
 def list():
-  return render_template( './게시판 목록.html' )
+    return render_template( './게시판 목록.html' )
 
 @app.route( '/Board_View' )
 def view():
-  return render_template( './게시판 내용.html' )
+    return render_template( './게시판 내용.html' )
 
 
 @app.route( '/Board_Write' )
 def write():
-  return render_template( './글쓰기.html' )
+    return render_template( './글쓰기.html' )
 
 @app.route('/streaming')
 def index():
@@ -216,6 +216,14 @@ def test():
     }
     #js = json.dumps(data)
     return Response(status=200, mimetype='application/json')
+
+@app.route('/search', methods=["POST"])
+def search():
+    form_data = request.form
+    table = form_data['table']
+    content = form_data['content']
+    messageList = db.search_content(table, content)
+    return resp.messageResponse(200, messageList)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

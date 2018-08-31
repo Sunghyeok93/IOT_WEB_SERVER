@@ -88,7 +88,7 @@ a:hover{
     var SERVER_URL = "http://54.180.8.155:5000"
 
     function get_message(){
-        var get_location = $.get( SERVER_URL + "/messages"); // 메시지 리스트
+        var get_location = $.get( SERVER_URL + "/photos"); // 메시지 리스트
         var message_list;
          get_location.done(function( data ) {
             console.log(data);
@@ -97,9 +97,8 @@ a:hover{
 
 
             for (var a = (message_list.length-1); a>=0; a--){
-                          var my_tbody = document.getElementById('my-tbody');
-    var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
-                console.log(message_list[a]['content']);
+                var my_tbody = document.getElementById('my-tbody');
+                var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
                 console.log(a);
 
     var cell1 = row.insertCell(0);
@@ -107,7 +106,13 @@ a:hover{
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
 
-    var s='<a href="http://localhost:5000/gallery">';
+    var name=message_list[a]['time'];
+    console.log(name);
+
+    var s='<a href="http://localhost:5000/gallery?'+ name + '">';
+    console.log('###');
+    console.log(s);
+
     s+=message_list[a]['time'];
     s+='</a>';
  //   cell1.innerHTML = "<a href="http://localhost:5000/Board_View">"+message_list[a]['num']+"</a>";
@@ -116,7 +121,7 @@ a:hover{
     cell1.align = "center";
      cell2.innerHTML=s;
      cell2.align="center";
-    cell3.innerHTML=message_list[a]['sender'];
+    cell3.innerHTML=message_list[a]['size'];
     cell3.align = "center";
 
 

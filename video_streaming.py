@@ -15,7 +15,7 @@ db = DB.DBconnect()
 resp = Resp.DBresponse()
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-# cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
+cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
 CORS(app)
 imagePath = '/home/ubuntu/IOT_WEB_SERVER/static/'
 
@@ -160,6 +160,81 @@ def send_gps():
         print(gps)
         return Response(gps, status=200)
 
+#메시징코드
+app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+#cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
+CORS(app)
+
+# https://flask-socketio.readthedocs.io/en/latest/
+# https://github.com/socketio/socket.io-client
+
+app = Flask(__name__)
+
+app.config[ 'SECRET_KEY' ] = 'jsbcfsbfjefebw237u3gdbdc'
+
+# No caching at all for API endpoints.
+@app.after_request
+def add_header(response):
+    # response.cache_control.no_store = True
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
+
+@app.route( '/' )
+def hello():
+  return render_template( '시작화면.html' )
+
+@app.route( '/jiah' )
+def jiah():
+  return render_template( '시작화면.html' )
+
+#게시판 목록
+@app.route( '/Board_List' )
+def list():
+  return render_template( './게시판 목록.html' )
+
+@app.route( '/Board_View' )
+def view():
+  return render_template( './게시판 내용.html' )
+
+
+@app.route( '/Board_Write' )
+def write():
+  return render_template( './글쓰기.html' )
+
+@app.route('/streaming')
+def index():
+    return render_template('스트리밍.html')
+
+@app.route('/map')
+def location():
+    return render_template('지도.html')
+
+@app.route('/gallery')
+def gallery():
+    return render_template('갤러리.html')
+
+@app.route('/gallery_list')
+def gallery_list():
+    return render_template('갤러리 목록.html')
+
+@app.route('/test', methods=["POST"])
+def test():
+    print(request.data)
+    json = request.form
+    file = request.files['abc']
+    filename = file.filename
+    file.save('/Users/sunghyeok/video_streaming/static/pic.jpg')
+    print(json)
+    print(file)
+    #print(json)
+    data = {
+        'status': 200
+    }
+    #js = json.dumps(data)
+    return Response(status=200, mimetype='application/json')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

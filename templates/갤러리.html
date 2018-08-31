@@ -84,10 +84,12 @@ scrollbar-face-color:#FFFFFF;
     function button1_click(){
         location.replace("https://localhost:5000/");
     }
-url='http://localhost:5000/'; //전역변수 선언
+
+
+
 </script>
     </head>
-    <body>
+    <body onload="showImage()">
      <header>
     <logo>
       <a href="#" onclick="window.location.href=url+'jiah'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
@@ -113,8 +115,27 @@ url='http://localhost:5000/'; //전역변수 선언
     <span>까스통님의 선물인 보드카가 정말 독하네요!!!</span>
     <span id="info">루바토 | 조회 : 208 | 2016-04-28 (09:20)</span>
   </div>
+             <script>
+             function showImage(){
+      url='http://localhost:5000/'; //전역변수 선언
+
+var temp=location.href.split("?");
+data=temp[1];
+console.log(data);
+
+          photo_dir="static/photo/"+data+".jpg";
+console.log(photo_dir);
+
+var image = document.getElementsByClassName("main_img");
+console.log(image[0].src);
+image[0].src=photo_dir;
+}
+
+
+      </script>
   <p id="view_content">
-     <img id="main_img" width="100%" src="/static/뚝배기사진.jpg">
+    <img class="main_img" width="100%" src="static/뚝배기사진.jpg">
+
   </p>
   <div id="comment_box">
     <img id="title_comment" src="static/title_comment.gif">

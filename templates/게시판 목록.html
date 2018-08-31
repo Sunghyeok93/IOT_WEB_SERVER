@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
 <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="static/common.css">
-  <link rel="stylesheet" type="text/css" href="static/header.css">
-  <link rel="stylesheet" type="text/css" href="static/footer.css">
+
   <link rel="stylesheet" type="text/css" href="static/board_left.css">
   <link rel="stylesheet" type="text/css" href="static/board_list_main.css">
 <style>
@@ -85,6 +85,47 @@ a:hover{
         location.replace("https://localhost:5000/");
     }
     url='http://localhost:5000/'; //전역변수 선언
+    var SERVER_URL = "http://54.180.8.155:5000"
+
+    function get_message(){
+        var get_location = $.get( SERVER_URL + "/messages"); // 메시지 리스트
+        var message_list;
+        get_location.done(function( data ) {
+        console.log(data);
+        message_list = data['list'];
+
+         for (var a = (message_list.length-1); a>=0; a--){
+         var my_tbody = document.getElementById('my-tbody');
+         var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
+         console.log(message_list[a]['content']);
+         console.log(a);
+
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+
+    var s='<a href="http://localhost:5000/Board_View">';
+    s+=message_list[a]['content'];
+    s+='</a>';
+ //   cell1.innerHTML = "<a href="http://localhost:5000/Board_View">"+message_list[a]['num']+"</a>";
+
+  cell1.innerHTML=message_list[a]['num'];
+    cell1.align = "center";
+     cell2.innerHTML=s;
+    cell3.innerHTML=message_list[a]['sender'];
+    cell3.align = "center";
+    cell4.innerHTML = message_list[a]['time'];
+    cell4.align = "center";
+
+  //   $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
+                }
+            status = data['status'];
+
+
+        });
+    };
 
     //동적
      function add_row() {
@@ -98,6 +139,7 @@ a:hover{
     var cell5 = row.insertCell(4);
     cell1.innerHTML = '5';
     cell4.innerHTML = new Date().toUTCString();
+
   }
 
   function delete_row() {
@@ -106,6 +148,7 @@ a:hover{
     // my_tbody.deleteRow(0); // 상단부터 삭제
     my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
   }
+  get_message()
 </script>
 
 
@@ -122,9 +165,9 @@ a:hover{
     <main_menu>
       <ul>
           <li>   <a href="#" onclick="window.location.href=url+'map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
-          <li>   <a href="#" onclick="window.location.href=url+'streaming'; return false;">&nbsp; RECOGNITION &nbsp;</a></li>
-          <li>   <a href="#" onclick="window.location.href=url; return false;">MESSAGING </a></li>
-          <li>   <a href="#" onclick="window.location.href=url+'Board_List'; return false;">&nbsp;BOARD&nbsp;</a></li>
+          <li>   <a href="#" onclick="window.location.href=url+'streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
+          <li>   <a href="#" onclick="window.location.href=url+'gallery_list'; return false;"> PICTURE </a></li>
+          <li>   <a href="#" onclick="window.location.href=url+'Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
 
       </ul>
     </main_menu>
@@ -148,13 +191,12 @@ a:hover{
         <div id="search_btn"><img src="static/search_button.gif"></div>
       </div>
     </div>
-    <table>
+    <table id="tb">
       <tr>
         <th>번호</th>
         <th>제목</th>
         <th>글쓴이</th>
         <th>일시</th>
-        <th>조회수</th>
       </tr>
       <tr>
         <td class="col1">1</td>
@@ -163,7 +205,6 @@ a:hover{
         </td>
         <td class="col3">루바토</td>
         <td class="col4">2017-09-20</td>
-        <td class="col5">15</td>
       </tr>
       <tr>
         <td class="col1">2</td>
@@ -172,7 +213,6 @@ a:hover{
         </td>
         <td class="col3">루바토</td>
         <td class="col4">2017-09-20</td>
-        <td class="col5">15</td>
       </tr>
       <tr>
         <td class="col1">3</td>
@@ -181,8 +221,6 @@ a:hover{
         </td>
         <td class="col3">루바토</td>
         <td class="col4">2017-09-20</td>
-        <td class="col5">15</td>
-      </tr>
 
         <tbody id="my-tbody"></tbody>
     </table>
@@ -193,7 +231,7 @@ a:hover{
         <a href="http://localhost:5000/Board_Write"><img src="static/write.png"></a>
       </div>
     </div>
-       <button onclick="add_row()">행 추가하기</button>
+       <button onclick="get_message()">행 추가하기</button>
        <button onclick="delete_row()">행 삭제하기</button>
   </section>
 </main>

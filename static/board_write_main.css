@@ -1,0 +1,54 @@
+﻿/* 우측 메인 콘텐트 */
+section#main {
+	width:100%;
+	float:right;
+	/* border:solid 1px #ff0000; */
+}
+section#main h2#board_title {
+    margin-top:20px;
+    padding:0 0 5px 0;
+    /* border-bottom:solid 1px #bbbbbb; */
+}
+section#main #write_title {
+    text-align:center;
+    margin:10px 0 0 0;
+    padding:5px;
+    background-color:#eeeeee;
+    border-top:solid 2px #bbbbbb;
+    border-bottom:solid 1px #bbbbbb;	
+}
+section#main table {
+    border-collapse:collapse;
+    margin:0 auto;
+    width:100%;
+}
+section#main td {
+    border-bottom:solid 1px #dddddd;
+    padding:10px;
+}
+section#main td.col1 {
+    width:150px;
+    text-align:center;
+    border-right:solid 1px #cccccc;
+}
+section#main td.col2 {
+    padding:5px 0 0 10px;
+}
+section#main #name input {
+    width:100px;
+    height:16px;
+    border:solid 1px #00ba2e;
+}
+section#main #subject input {
+    width:550px;
+    height:16px;	
+}
+section#main #content textarea {
+    width:550px;
+    height:200px;	
+    margin:5px 5px 5px 0;
+}
+section#main #buttons {
+    text-align:right;
+    margin:10px 10px 0 0;
+}

@@ -1,0 +1,106 @@
+﻿/* 우측 메인 콘텐츠 */
+section#main {
+    width:100%;
+    float:right;
+    /* border:solid 1px #ff0000; */
+}
+section#main h2#board_title {
+    margin-top:20px;
+    padding:0 0 5px 0;
+    border-bottom:solid 1px #bbbbbb;
+}
+section#main #total_search {
+    height:35px;
+    position:relative;
+    /* border:solid 1px #ff0000; */
+}
+section#main #total {
+    position:absolute;
+    top:10px;
+}
+section#main #search {
+    position:absolute;
+    left:460px;
+}
+section#main #search #select_img {
+    position:absolute;
+    top: 9px;
+}
+section#main #search #search_select {
+    position:absolute;
+    top: 5px;
+    left: 60px;
+}
+section#main #search #search_input {
+    position:absolute;
+    top:7px;
+    left:130px;
+}
+section#main #search #search_input input {
+    width:100px;
+}
+section#main #search #search_btn {
+    position:absolute;
+    top:6px;
+    left:240px;
+}
+section#main table {
+    border-collapse:collapse;
+    margin:0 auto;
+    width:100%;
+}
+section#main tr {
+    height:30px;
+}
+section#main th {
+    border-top:solid 2px #aaaaaa;
+    background-color:#eeeeee;
+}
+section#main td {
+    border-bottom:solid 1px #dddddd;
+}
+section#main td.col1 {
+    width:60px;
+    text-align:center;
+}
+section#main td.col2 {
+}
+section#main td.col3 {
+    width:60px;
+    text-align:center;	
+}
+section#main td.col4 {
+    width:110;
+    text-align:center;	
+}
+section#main td.col5 {
+    width:60px;	
+    text-align:center;
+}
+section#main td a:link {
+    text-decoration:none;
+    color:#444444;
+}
+section#main td a:hover {
+    text-decoration:none;
+    color:#444444;
+}
+section#main td a:visited {
+    text-decoration:none;
+    color:#444444;
+}
+section#main td a:active {
+    text-decoration:none;
+    color:#444444;
+}
+section #buttons {
+    margin-top:20px;
+}
+section #buttons .col1 {
+    float:left;
+    margin-left:40%;
+}
+section #buttons .col2 {
+    float:right;
+    margin-right:10px;
+}

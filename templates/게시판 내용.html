@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="static/common.css">
+<link rel="stylesheet" type="text/css" href="static/header.css">
+<link rel="stylesheet" type="text/css" href="static/footer.css">
+<link rel="stylesheet" type="text/css" href="static/board_left.css">
+<link rel="stylesheet" type="text/css" href="static/board_view_main.css">
+<meta charset="utf-8">
+<style>
+html, body{height:100%;}
+* {
+    margin:0;
+    padding:0;
+}
+header {
+    height:20%;
+    background-color:#FFFFFF;
+}
+logo {
+    position:absolute;
+    top:2%;
+    left:50%;
+    transform:translateX(-15%);
+}
+top_menu {
+    position:absolute;
+    top:20px;
+    right:5%;
+    font-size: 0.5em;
+    color:#0B614B;
+}
+main_menu {
+    position:absolute;
+    top:16%;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:1.5em;
+    color:#0B614B;
+    font-weight:bold;
+}
+main_menu li {
+    display:inline;
+    margin-left:30px;
+}
+
+content ul {
+    margin-top:100px;
+}
+content li {
+    display:inline;
+    margin-left:60px;
+}
+main {
+  margin-right:10%;
+    margin-left:10%;
+    overflow:hidden;
+    width:80%;
+    height:60%;
+    float:left;
+}
+footer {
+    width:100%;
+    height:20%;
+    clear:both;
+    margin-top:5%;
+    background-color:#ffffff;
+    text-align:center;
+    color:#0B614B;
+}
+
+a{
+    color:#0B614B;
+    text-decoration:none;
+}
+a:hover{
+    text-decoration:underline;
+   }
+
+
+</style>
+</head>
+<script>
+    function button1_click(){
+        location.replace("https://localhost:5000/");
+    }
+url='http://localhost:5000/'; //전역변수 선언
+</script>
+    </head>
+    <body>
+     <header>
+    <logo>
+      <a href="#" onclick="window.location.href=url+'jiah'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
+    </logo>
+    <top_menu>
+      HOME | NOTICE | LOGIN | JOIN
+    </top_menu>
+    <main_menu>
+      <ul>
+          <li>   <a href="#" onclick="window.location.href=url+'map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
+          <li>   <a href="#" onclick="window.location.href=url+'streaming'; return false;">&nbsp; RECOGNITION &nbsp;</a></li>
+          <li>   <a href="#" onclick="window.location.href=url; return false;">MESSAGING </a></li>
+          <li>   <a href="#" onclick="window.location.href=url+'Board_List'; return false;">&nbsp;BOARD&nbsp;</a></li>
+
+      </ul>
+    </main_menu>
+
+  </header>
+  <main>
+   <section id="main">
+  <h2 id="board_title">자유 게시판 </h2>
+  <div id="view_title_box">
+    <span>까스통님의 선물인 보드카가 정말 독하네요!!!</span>
+    <span id="info">루바토 | 조회 : 208 | 2016-04-28 (09:20)</span>
+  </div>
+  <p id="view_content">
+    까스통님 고맙습니다. <br>
+    까스통님 고맙습니다. <br>
+    까스통님 고맙습니다. <br>
+    까스통님 고맙습니다. <br>
+    까스통님 고맙습니다. <br>
+  </p>
+  <div id="comment_box">
+    <img id="title_comment" src="static/title_comment.gif">
+    <textarea></textarea>
+    <img id="ok_ripple" src="static/ok_ripple.gif">
+  </div>
+  <div id="buttons">
+
+  </div>
+</section>
+  </main>
+  <footer>
+   <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
+    주소 : 서울시 동작구<br>
+    전화 : 010-000-0000<br>
+    대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
+  </footer>
+</body>
+</html>

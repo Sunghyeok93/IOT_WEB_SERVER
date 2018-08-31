@@ -1,0 +1,50 @@
+﻿/* 우측 메인 콘텐트 */
+section#main {
+    width:100%;
+    float:right;
+    /* border:solid 1px #ff0000; */
+}
+section#main h2#board_title {
+    margin-top:20px;
+    padding:0 0 5px 0;
+}
+section#main #view_title_box {
+    margin:10px 0 0 0;
+    padding:10px;
+    border-top:solid 2px #aaaaaa;
+    background-color:#eeeeee;	
+} 
+section#main #view_title_box #info {
+    margin:0 0 0 270px;
+} 
+section#main #view_content {
+    padding:20px 10px 10px 10px;
+    line-height:150%;
+} 
+section#main #comment_box {
+    height:112px;
+    position:relative;
+    background-color:#efefef;
+    border-top:solid 1px #cccccc;
+}
+section#main #comment_box #title_comment {
+    position:absolute;
+    top:15px;
+    left:15px;
+}
+section#main #comment_box textarea {
+    width:75%;
+    height:78px;
+    position:absolute;
+    top:15px;
+    left:145px;	
+}
+section#main #comment_box #ok_ripple {
+    position:absolute;
+    top:15px;
+    right:3%;
+}
+section #buttons {
+    text-align:right;
+    margin:20px 0 0 0;
+}

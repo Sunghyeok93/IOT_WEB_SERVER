@@ -215,7 +215,7 @@ def test():
 
 @app.route('/photobook', methods=["POST"])
 def get_photo():
-    return Response(status=get_frame(str(strftime("%Y-%m-%d-%H%M%S", gmtime())), True), mimetype='text/plain')
+    return Response(status=get_frame("photo/" + str(strftime("%Y-%m-%d-%H%M%S", gmtime())), True), mimetype='text/plain')
 
 @app.route('/search', methods=["POST"])
 def search():

@@ -81,14 +81,12 @@ def index():
 @app.route('/photos')
 def photos():
     photoList = db.selectPhoto()
-    print(photoList)
     return resp.photoResponse(200, photoList)
     
 
 @app.route('/messages')
 def messages():
     messageList = db.selectMessage()
-    print(messageList)
     return resp.messageResponse(200, messageList)
 
 
@@ -114,11 +112,23 @@ def video():
 def location():
     return render_template('map.html')
 
-
 @app.route('/path')  # 보호자 -> 웹 : 길찾기 경로 조회
 def path():
     return render_template('path.html')
 
+@app.route('/message') # 보호자 -> 웹 : 음성사서함
+def voicemail():
+    return render_template('메시징.html')
+
+@app.route('/voicemail', methods=["POST"]) # 아틱 -> 서버 : 음성입력
+def send_mail():
+    pass
+    return Response(status=200)
+
+@app.route('/voicemail', methods=["GET"]) # 아틱 -> 서버 : 음성받음
+def get_mail():
+    pass
+    return Response(status=200)
 
 @app.route('/image', methods=["POST"])  # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
 def test():

@@ -10,6 +10,7 @@ import time
 from time import gmtime, strftime, localtime
 import datetime
 import os
+import shutil
 
 translateEtoK = { 'person':'사람', 'bicycle':'자전거', 'car':'자동차', 'motorbike':'오토바이', 'aeroplane':'비행기', 'bus':'버스', 'train':'전철', 'truck':'트럭', 'boat':'보트', 'traffic light':'신호등', 'fire hydrant':'소화전', 'stop sign':'정지 표지판', 'parking meter':'계량기', 'bench':'벤치', 'bird':'새', 'cat':'고양이', 'dog':'개', 'horse':'말', 'sheep':'양', 'cow':'소', 'elephant':'코끼리', 'bear':'곰', 'zebra':'얼룩말', 'giraffe':'기린', 'backpack':'가방', 'umbrella':'우산', 'handbag':'핸드백', 'tie':'넥타이', 'suitcase':'서류가방', 'frisbee':'원반', 'skis':'스키', 'snowboard':'스노우보드', 'sports ball':'공', 'kite':'연', 'baseball bat':'방망이', 'baseball glove':'장갑', 'skateboard':'스케이트보드', 'surfboard':'서핑보드', 'tennis racket':'테니스라켓', 'bottle':'유리병', 'wine glass':'유리컵', 'cup':'컵', 'fork':'포크', 'knife':'나이프', 'spoon':'숟가락', 'bowl':'그릇', 'banana':'바나나', 'apple':'사과', 'sandwich':'샌드위치', 'orange':'오렌지', 'broccoli':'브로콜리', 'carrot':'당근', 'hot dog':'핫도그', 'pizza':'피자', 'donut':'도넛', 'cake':'케이크', 'chair':'의자', 'sofa':'소파', 'pottedplant':'화분', 'bed':'침대', 'diningtable':'식탁', 'toilet':'화장실', 'tvmonitor':'모니터', 'laptop':'노트북', 'mouse':'마우스', 'remote':'리모컨', 'keyboard':'키보드', 'cell phone':'핸드폰', 'microwave':'전자렌지', 'oven':'오븐', 'toaster':'토스터기', 'sink':'싱크대', 'refrigerator':'냉장고', 'book':'책', 'clock':'시계', 'vase':'병', 'scissors':'가위', 'teddy bear':'곰인형', 'hair drier':'헤어드라이어', 'toothbrush':'칫솔' }
 
@@ -21,6 +22,21 @@ cors = CORS(app, supports_credentials=False)
 app.config['CORS_HEADERS'] = 'Content-Type'
 imagePath = '/home/ubuntu/IOT_WEB_SERVER/static/'
 
+def get_current_time():
+    utcnow = datetime.datetime.utcnow()
+    time_gap = datetime.timedelta(hours=9)
+    kor_time = str(utcnow + time_gap) # Kor_time -> %Y-%m-%d %H:%M:%S.%f
+    yearMonthDay = kor_time.split(' ')[0]
+    extra = kor_time.split(' ')[1]
+    extra = extra.split('.')[0]
+    hour = extra.split(':')[0]
+    minute = extra.split(':')[1]
+    second = extra.split(':')[2]
+    
+    return yearMonthDay + "-" + hour + minute + second
+ 
+
+
 def get_frame(imageName, isDB):
 
     def get_img_name(img_name):
@@ -28,7 +44,7 @@ def get_frame(imageName, isDB):
             raise TypeError('이미지 타입은 스트링')
         if '.' not in img_name:
             return img_name + '.jpg'
-        if img_name.split('.')[1] in ['jpg', 'png', 'jpeg']:
+        if img_name.split('.')[1] not in ['jpg', 'png', 'jpeg']:
             raise ValueError('이미지 확장자가 이상해')
         return img_name
 
@@ -39,6 +55,7 @@ def get_frame(imageName, isDB):
             return img_name.split('/')[1]
 
     try:
+        print(imageName)
         imageTime = get_time_from_name(imageName)
         imageName = get_img_name(imageName)
         filePath = os.path.join(imagePath, imageName)
@@ -91,7 +108,7 @@ def messages():
 @app.route('/videostream', methods=["POST"])  # 아틱-> 서버 : 비디오스트리밍
 def videostream():
     print('videostrem : 안')
-    return Response(status=get_frame(str(time.time()), True), mimetype='text/plain')
+    return Response(status=get_frame("extra/" + get_current_time(), True), mimetype='text/plain')
 
 
 @app.route('/videostream', methods=["GET"])  # 서버 -> 웹 : 비디오스트리밍
@@ -130,8 +147,8 @@ def get_mail():
 
 @app.route('/image', methods=["POST"])  # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
 def image():
-    get_frame('yolo.jpg', False)
-    result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/yolo.jpg')
+    get_frame('extra/yolo.jpg', False)
+    result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/extra/yolo.jpg')
     if result is not '':
         str_result = ''
         for i in result:
@@ -226,9 +243,7 @@ def get_photo():
     
     utcnow = datetime.datetime.utcnow()
     time_gap = datetime.timedelta(hours=9)
-    kor_time = utcnow + time_gap # Kor_time -> %Y-%m-%d %H:%M:%S.%f
-    print(kor_time)
-    kor_time = str(kor_time)
+    kor_time = str(utcnow + time_gap) # Kor_time -> %Y-%m-%d %H:%M:%S.%f
     yearMonthDay = kor_time.split(' ')[0]
     extra = kor_time.split(' ')[1]
     extra = extra.split('.')[0]
@@ -237,9 +252,8 @@ def get_photo():
     second = extra.split(':')[2]
     
     kor_time=yearMonthDay + "-" + hour + minute + second
-    print(kor_time)
     
-    return Response(status=get_frame("photo/" + strftime("%Y-%m-%d-%H%M%S", gmtime()), True), mimetype='text/plain')
+    return Response(status=get_frame("photo/" + kor_time, True), mimetype='text/plain')
 
 @app.route('/search', methods=["POST"])
 def search():
@@ -250,4 +264,10 @@ def search():
     return resp.messageResponse(200, messageList)
 
 if __name__ == '__main__':
+    db.delete_extra_img()
+    try:
+        shutil.rmtree("/home/ubuntu/IOT_WEB_SERVER/static/extra")
+    except OSError as e:
+        print ("Error: %s - %s." % (e.filename, e.strerror))
+    os.mkdir("/home/ubuntu/IOT_WEB_SERVER/static/extra")
     app.run(host='0.0.0.0', debug=True)

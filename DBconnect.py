@@ -45,6 +45,10 @@ class DBconnect():
         self.cursor.execute(query)
         return self.cursor.fetchone()
 
+    def delete_extra_img(self):
+        query = "DELETE FROM Image WHERE path LIKE '%extra%';"
+        self.cursor.execute(query)
+
     def search_content(self, table, content):
         query=""
         if table == "Message":

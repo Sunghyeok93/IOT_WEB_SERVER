@@ -16,7 +16,7 @@ db = DB.DBconnect()
 resp = Resp.DBresponse()
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
+cors = CORS(app, resources={r"/*": {"origins": "http://54.180.8.155:5000"}})
 CORS(app)
 imagePath = '/home/ubuntu/IOT_WEB_SERVER/static/'
 
@@ -126,8 +126,9 @@ def send_mail():
     db.insertMessage(strftime("%Y-%m-%d %H:%M:%S", gmtime()), content, sender, isRead)
     return Response(status=200)
 
-@app.route('/voicemail', methods=["GET"]) # 서버 -> 아틱 : 음성받음
+@app.route('/voicemail') # 서버 -> 아틱 : 음성받음
 def get_mail():
+    print("도착")
     message_not_read = db.getMessageNotRead()
     if len(message_not_read) is 0:
         return Response("읽지 않은 메시지가 없습니다.", status=200, mimetype='text/plain')
@@ -176,17 +177,6 @@ def send_gps():
         return Response(gps, status=200)
 
 #메시징코드
-app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-#cors = CORS(app, resources={r"/*": {"origins": "http://121.129.2.195:8080"}})
-CORS(app)
-
-# https://flask-socketio.readthedocs.io/en/latest/
-# https://github.com/socketio/socket.io-client
-
-app = Flask(__name__)
-
-app.config[ 'SECRET_KEY' ] = 'jsbcfsbfjefebw237u3gdbdc'
 
 # No caching at all for API endpoints.
 @app.after_request

@@ -35,13 +35,10 @@ def get_frame(imageName, isDB):
     try:
         imageName = get_img_name(imageName)
         filePath = os.path.join(imagePath, imageName)
-        print('get_frame : 안')
         file = request.files['abc']
-        print('get_frame : request 지나감')
         file.save(filePath)
         if isDB is True:
             db.insertImage(imageName, filePath, str(os.path.getsize(filePath)))
-        print('get_frame : save 지나감')
     except IOError:
         print("get_frame : 파일 저장 에러")
     return 200
@@ -49,7 +46,6 @@ def get_frame(imageName, isDB):
 
 def video_gen(cam):
     while True:
-        print('video_gen : 안')
         frame = cam.get_frame()
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         """
@@ -216,6 +212,10 @@ def test():
     }
     #js = json.dumps(data)
     return Response(status=200, mimetype='application/json')
+
+@app.route('/photobook', methods=["POST"])
+def get_photo():
+    return Response(status=get_frame(str(strftime("%Y-%m-%d-%H%M%S", gmtime())), True), mimetype='text/plain')
 
 @app.route('/search', methods=["POST"])
 def search():

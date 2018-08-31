@@ -124,7 +124,7 @@ def get_mail():
     return Response(message, status=200, mimetype='text/plain')
 
 @app.route('/image', methods=["POST"])  # 아틱 -> 서버 -> 아틱 : 사진 yolo 수행
-def test():
+def image():
     get_frame('yolo.jpg', False)
     result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/yolo.jpg')
     if result is not '':

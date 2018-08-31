@@ -3,14 +3,12 @@ import sqlite3
 class DBconnect():
 
     def __init__(self):
-        self.connect = sqlite3.connect('./iot.db', check_same_thread=False)
+        self.connect = sqlite3.connect('./iot.db', check_same_thread=False, isolation_level=None)
         self.cursor = self.connect.cursor()
 
-    def insertMessage(self, time, content, sender):
-        isRead = 0
-        if sender is not "ARTIK":
-            isRead = 1
-        query = "INSERT INTO Message(time, content, sender, isRead) Values(" + time + "," + content + "," + sender + "," + str(isRead) + ");"
+    def insertMessage(self, time, content, sender, isRead):
+        query = "INSERT INTO Message(time, content, sender, isRead) Values('" + time + "','" + content + "','" + sender + "'," + str(isRead) + ");"
+        print(query)
         return self.cursor.execute(query)
 
     def getMessageNotRead(self):

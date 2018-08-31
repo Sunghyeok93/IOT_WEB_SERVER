@@ -16,7 +16,7 @@ db = DB.DBconnect()
 resp = Resp.DBresponse()
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-cors = CORS(app, resources={r"/*": {"origins": "http://54.180.8.155:5000"}})
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)
 imagePath = '/home/ubuntu/IOT_WEB_SERVER/static/'
 
@@ -105,12 +105,13 @@ def path():
 
 @app.route('/voicemail', methods=["POST"]) # * -> 서버 : 음성입력
 def send_mail():
-    content = request.form('content')
-    sender = request.form('sender')
+    form_data = request.form
+    sender = form_data['sender']
+    content = form_data['content']
     isRead = 1
     if sender is 'ARTIK':
         isRead = 0
-    db.insertMessage(strftime("%Y-%m-%d %H:%M:%S", gmtime()), content, sender, isRead)
+    db.insertMessage(strftime("%Y-%m-%d-%H:%M:%S", gmtime()), content, sender, isRead)
     return Response(status=200)
 
 @app.route('/voicemail') # 서버 -> 아틱 : 음성받음

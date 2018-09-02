@@ -2,150 +2,154 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="static/common.css">
-<link rel="stylesheet" type="text/css" href="static/board_left.css">
-<link rel="stylesheet" type="text/css" href="static/board_view_main.css">
-<meta charset="utf-8">
-<style>
-html, body{height:100%;}
-* {
-    margin:0;
-    padding:0;
-}
-header {
-    height:20%;
-    background-color:#FFFFFF;
-}
-logo {
-    position:absolute;
-    top:2%;
-    left:50%;
-    transform:translateX(-15%);
-}
-top_menu {
-    position:absolute;
-    top:20px;
-    right:5%;
-    font-size: 0.5em;
-    color:#0B614B;
-}
-main_menu {
-    position:absolute;
-    top:16%;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:1.5em;
-    color:#0B614B;
-    font-weight:bold;
-}
-main_menu li {
-    display:inline;
-    margin-left:30px;
-}
+    <link rel="stylesheet" type="text/css" href="static/board_left.css">
+    <link rel="stylesheet" type="text/css" href="static/board_view_main.css">
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            height: 100%;
+        }
 
-content ul {
-    margin-top:100px;
-}
-content li {
-    display:inline;
-    margin-left:60px;
-}
-main {
-  margin-right:10%;
-    margin-left:10%;
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-    width:80%;
-    height:80%;
-    float:left;
-}
-a{
-    color:#0B614B;
-    text-decoration:none;
-}
-a:hover{
-    text-decoration:underline;
-   }
+        header {
+            height: 20%;
+            background-color: #FFFFFF;
+        }
 
-#main_img {
-    overflow:scroll;
-    padding-bottom:20px;
+        logo {
+            position: absolute;
+            top: 2%;
+            left: 50%;
+            transform: translateX(-15%);
+        }
 
-scrollbar-face-color:#FFFFFF;
-  scrollbar-3dlight-color:#FFFFFF;
-  scrollbar-highlight-color:#FFFFFF;
-  scrollbar-shadow-color:#000000;
-  scrollbar-darkshadow-color:#FFFFFF;
-  scrollbar-arrow-color:#000000;
-  scrollbar-track-color:#FFFFFF;
-}
+        top_menu {
+            position: absolute;
+            top: 20px;
+            right: 5%;
+            font-size: 0.5em;
+            color: #0B614B;
+        }
 
-</style>
+        main_menu {
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #0B614B;
+            font-weight: bold;
+        }
+
+        main_menu li {
+            display: inline;
+            margin-left: 30px;
+        }
+
+        content ul {
+            margin-top: 100px;
+        }
+
+        content li {
+            display: inline;
+            margin-left: 60px;
+        }
+
+        main {
+            margin-right: 10%;
+            margin-left: 10%;
+
+            width: 80%;
+            height: 80%;
+            float: left;
+        }
+
+        a {
+            color: #0B614B;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #main_img {
+            overflow: scroll;
+            padding-bottom: 20px;
+
+            scrollbar-face-color: #FFFFFF;
+            scrollbar-3dlight-color: #FFFFFF;
+            scrollbar-highlight-color: #FFFFFF;
+            scrollbar-shadow-color: #000000;
+            scrollbar-darkshadow-color: #FFFFFF;
+            scrollbar-arrow-color: #000000;
+            scrollbar-track-color: #FFFFFF;
+        }
+
+    </style>
 </head>
 <script>
-    function button1_click(){
+    function button1_click() {
         location.replace("https://localhost:5000/");
     }
 
 
-
 </script>
-    </head>
-    <body onload="showImage()">
-     <header>
+</head>
+<body onload="showImage()">
+<header>
     <logo>
-      <a href="#" onclick="window.location.href='jiah'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
+        <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg"
+                                                                              style="max-width:35%; height:auto;"></a>
     </logo>
-    <top_menu>
-      HOME | NOTICE | LOGIN | JOIN
-    </top_menu>
-    <main_menu>
-      <ul>
-          <li>   <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
-          <li>   <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
-          <li>   <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
-          <li>   <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
 
-      </ul>
+    <main_menu>
+        <ul>
+            <li><a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
+            <li><a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
+            <li><a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
+            <li><a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
+
+        </ul>
     </main_menu>
 
-  </header>
-  <main>
-   <section id="main">
-  <h2 id="board_title">자유 게시판 </h2>
-  <div id="view_title_box">
-    <span>까스통님의 선물인 보드카가 정말 독하네요!!!</span>
-    <span id="info">루바토 | 조회 : 208 | 2016-04-28 (09:20)</span>
-  </div>
-             <script>
-             function showImage(){
-      url='http://localhost:5000/'; //전역변수 선언
+</header>
+<script>
+    function showImage() {
+        url = 'http://localhost:5000/'; //전역변수 선언
 
-var temp=location.href.split("?");
-data=temp[1];
-console.log(data);
+        var temp = location.href.split("?");
+        data = temp[1];
+        console.log(data);
+        document.getElementById("view_title_box").innerHTML=data;
 
-          photo_dir="static/photo/"+data+".jpg";
-console.log(photo_dir);
+        photo_dir = "static/photo/" + data + ".jpg";
+        console.log(photo_dir);
 
-var image = document.getElementsByClassName("main_img");
-console.log(image[0].src);
-image[0].src=photo_dir;
-}
+        var image = document.getElementsByClassName("main_img");
+        console.log(image[0].src);
+        image[0].src = photo_dir;
+    }
+</script>
+<main>
+    <section id="main">
+        <h2 id="board_title">자유 게시판 </h2>
+        <div id="view_title_box">
+            <span></span>
+        </div>
 
+        <p id="view_content">
+            <img class="main_img" width="100%">
 
-      </script>
-  <p id="view_content">
-    <img class="main_img" width="100%" src="static/뚝배기사진.jpg">
+        </p>
+        <div id="comment_box">
+        </div>
 
-  </p>
-  <div id="comment_box">
-    <img id="title_comment" src="static/title_comment.gif">
-    <textarea></textarea>
-    <img id="ok_ripple" src="static/ok_ripple.gif">
-  </div>
-  <div id="buttons">
-
-  </div>
-</section>
-  </main>
+    </section>
+</main>
 </body>
 </html>

@@ -191,7 +191,7 @@
 
         var posting = $.post(SERVER_URL + "/search", {
             "table": "Message",
-            "content": text
+            "content": text.val()
         });
         posting.done(function (data) {
             var message_list;

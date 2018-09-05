@@ -12,7 +12,7 @@ class Camera(BaseCamera):
     @staticmethod
     def frames():
         while True:
-            time.sleep(1)  # 조절하셈
+            time.sleep(0.5)  # 조절하셈
             yield Camera.get_newest_img()
 
     @staticmethod

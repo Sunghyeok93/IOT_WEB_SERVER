@@ -141,6 +141,48 @@ a:hover{
     // my_tbody.deleteRow(0); // 상단부터 삭제
     my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
   }
+
+    function text2() {
+            var text = $("#content_text");
+            console.log(text);
+
+            var posting = $.post(SERVER_URL + "/search", {
+                "table": "Image",
+                "content": text.val()
+            });
+        posting.done(function (data) {
+            var message_list;
+            alert('done');
+            message_list = data['list'];
+
+            $('#my-tbody').empty();
+            for (var a = (message_list.length - 1); a >= 0; a--) {
+                var my_tbody = document.getElementById('my-tbody');
+                var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+                console.log(message_list[a]['size']);
+                console.log("jiah");
+
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+
+                cell1.innerHTML = message_list[a]['num'];
+                cell1.align = "center";
+                cell2.innerHTML = message_list[a]['time'];
+                cell2.align="center";
+                cell3.innerHTML = message_list[a]['size'];
+                cell3.align = "center";
+
+
+                //   $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
+            }
+            status = data['status'];
+
+
+            //location.href='Board_List';
+        });
+    }
+
   get_message()
 </script>
 
@@ -170,16 +212,16 @@ a:hover{
     <div id="total_search">
 
       <div id="search">
-        <div id="select_img"><img src="static/select_search.gif"></div>
-        <div id="search_select">
+       <!-- <div id="select_img"><img src="static/select_search.gif"></div>-->
+        <!--<div id="search_select">
           <select>
             <option>제목</option>
             <option>내용</option>
             <option>글쓴이</option>
           </select>
-        </div>
-        <div id="search_input"><input type="text"></div>
-        <div id="search_btn"><img src="static/search_button.gif"></div>
+        </div> -->
+          <div id="search_input"><input type="text" id="content_text"></div>
+        <div id="search_btn"><img onclick="text2()" img src="static/search_button.gif"></div>
       </div>
     </div>
     <table id="tb">

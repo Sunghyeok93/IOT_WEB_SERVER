@@ -254,8 +254,11 @@ def search():
     form_data = request.form
     table = form_data['table']
     content = form_data['content']
-    messageList = db.search_content(table, content)
-    return resp.messageResponse(200, messageList)
+    resultList = db.search_content(table, content)
+    if table == 'Message':
+        return resp.messageResponse(200, resultList)
+    else:
+        return resp.photoResponse(200, resultList)
 
 if __name__ == '__main__':
     db.delete_extra_img()

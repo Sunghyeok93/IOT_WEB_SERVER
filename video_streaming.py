@@ -73,12 +73,6 @@ def video_gen(cam):
         print("video_gen")
         frame = cam.get_frame()
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-        """
-        with open('/home/ubuntu/IOT_WEB_SERVER/static/'+filename, 'rb') as frame: 
-            print('type of frame : ' + str(type(frame.read(-1))))
-            # pass
-            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame.read(-1) + b'\r\n')
-        """
 # No caching at all for API endpoints.
 
 

@@ -52,9 +52,9 @@ class DBconnect():
     def search_content(self, table, content):
         query=""
         if table == "Message":
-            query = "SELECT * FROM Message WHERE content LIKE '%" +content + "%';"
+            query = "SELECT * FROM Message WHERE content LIKE '%" + content + "%';"
         else: # Image
-            query = "SELECT * FROM Message WHERE time LIKE '%" +    content + "%';"
+            query = "SELECT * FROM Message WHERE time LIKE '%" +  content + "%';"
         self.cursor.execute(query)
         return self.cursor.fetchall()
 

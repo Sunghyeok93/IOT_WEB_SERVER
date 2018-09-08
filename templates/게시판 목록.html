@@ -89,6 +89,19 @@
             text-decoration: underline;
         }
 
+        tb {
+            overflow: scroll;
+            padding-bottom: 20px;
+
+            scrollbar-face-color: #FFFFFF;
+            scrollbar-3dlight-color: #FFFFFF;
+            scrollbar-highlight-color: #FFFFFF;
+            scrollbar-shadow-color: #000000;
+            scrollbar-darkshadow-color: #FFFFFF;
+            scrollbar-arrow-color: #000000;
+            scrollbar-track-color: #FFFFFF;
+        }
+
 
     </style>
 </head>
@@ -101,16 +114,55 @@
     var SERVER_URL = "http://54.180.8.155:5000"
 
     function get_message() {
+
+      /*  document.getElementById("view_title_box").innerHTML=data;
+
+        photo_dir = "static/photo/" + data + ".jpg";
+        console.log(photo_dir);
+
+        var image = document.getElementsByClassName("main_img");
+        console.log(image[0].src);
+        image[0].src = photo_dir;*/
+
+
         var get_location = $.get(SERVER_URL + "/messages"); // 메시지 리스트
         var message_list;
         get_location.done(function (data) {
             console.log(data);
             message_list = data['list'];
+            var num=5;
 
-            for (var a = (message_list.length - 1); a >= 0; a--) {
+            var page_totalnum=message_list.length/num;//페이지 갯수
+            //console.log("page"+page_totalnum);
+
+
+            for(var a=1; a<=page_totalnum+1; a++)
+            {
+                var row=document.getElementById("tb_row");
+              //  var page_tbody=document.getElementById('page_tb');
+                var column=row.insertCell(a);
+
+                var s = '<a href="Board_List?' + a +'">';
+                s += "&nbsp&nbsp"+a+" ";
+                s += '</a>';
+                console.log(s)
+
+                column.innerHTML=s;
+            }
+
+            //주소 읽기
+            var temp = location.href.split("?");
+            page_num = temp[1] || 1;
+            console.log(page_num);
+
+           // page_num=2;
+           var arr= message_list.slice((page_num-1)*num, page_num*num);
+           console.log(arr);
+
+            for (var a = arr.length-1; a >= 0; a--) {
                 var my_tbody = document.getElementById('my-tbody');
                 var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-                console.log(message_list[a]['content']);
+              //  console.log(message_list[a]['content']);
                 console.log(a);
 
                 var cell1 = row.insertCell(0);
@@ -120,16 +172,17 @@
 
 
                 var s = '<a href="Board_View">';
-                s += message_list[a]['content'];
+                s += arr[a]['content'];
                 s += '</a>';
+                console.log(s);
                 //   cell1.innerHTML = "<a href="http://localhost:5000/Board_View">"+message_list[a]['num']+"</a>";
 
-                cell1.innerHTML = message_list[a]['num'];
+                cell1.innerHTML = arr[a]['num'];
                 cell1.align = "center";
-                cell2.innerHTML = message_list[a]['content'];
-                cell3.innerHTML = message_list[a]['sender'];
+                cell2.innerHTML = arr[a]['content'];
+                cell3.innerHTML = arr[a]['sender'];
                 cell3.align = "center";
-                cell4.innerHTML = message_list[a]['time'];
+                cell4.innerHTML = arr[a]['time'];
                 cell4.align = "center";
 
                 //   $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
@@ -281,7 +334,7 @@
             <tbody id="my-tbody"></tbody>
         </table>
         <div id="buttons">
-            <div class="col1">◀ 이전 1 다음 ▶</div>
+            <div class="col1"><table id="page_tb"><tr id="tb_row"><td> </td></tr> </table></div>
             <div class="col2">
                 <img src="static/list.png">
                 <a href='Board_Write'><img src="static/write.png"></a>

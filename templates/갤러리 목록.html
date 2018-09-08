@@ -94,12 +94,39 @@ a:hover{
             console.log(data);
             message_list = data['list'];
 
+             var num=5;
+
+             var page_totalnum=message_list.length/num;//페이지 갯수
+             console.log("page"+page_totalnum);
 
 
-            for (var a = (message_list.length-1); a>=0; a--){
+             for(var a=1; a<=page_totalnum+1; a++)
+             {
+                 var row=document.getElementById("tb_row");
+              //   var page_tbody=document.getElementById('page_tb');
+                 var column=row.insertCell(a);
+
+                 var s = '<a href="gallery_list?' + a +'">';
+                 s += "&nbsp&nbsp"+a+" ";
+                 s += '</a>';
+             //    console.log(s)
+
+                 column.innerHTML=s;
+             }
+
+             //주소 읽기
+             var temp = location.href.split("?");
+             page_num = temp[1] || 1;
+             console.log(page_num);
+
+             // page_num=2;
+             var arr= message_list.slice((page_num-1)*num, page_num*num);
+          //   console.log(arr);
+
+            for (var a = (arr.length-1); a>=0; a--){
                 var my_tbody = document.getElementById('my-tbody');
                 var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
-                console.log(a);
+           //     console.log(a);
 
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
@@ -107,23 +134,23 @@ a:hover{
     var cell4 = row.insertCell(3);
 
     var name=message_list[a]['time'];
-    console.log(name);
+   // console.log(name);
 
     var url="54.180.8.155:5000/";
 
     var s='<a href="gallery?'+ name + '">';
-    console.log('###');
-    console.log(s);
+   // console.log('###');
+   // console.log(s);
 
-    s+=message_list[a]['time'];
+    s+=arr[a]['time'];
     s+='</a>';
  //   cell1.innerHTML = "<a href="http://localhost:5000/Board_View">"+message_list[a]['num']+"</a>";
 
-  cell1.innerHTML=message_list[a]['num'];
+  cell1.innerHTML=arr[a]['num'];
     cell1.align = "center";
      cell2.innerHTML=s;
      cell2.align="center";
-    cell3.innerHTML=message_list[a]['size'];
+    cell3.innerHTML=arr[a]['size'];
     cell3.align = "center";
 
 
@@ -144,14 +171,14 @@ a:hover{
 
     function text2() {
             var text = $("#content_text");
-            console.log(text);
+        //    console.log(text);
 
             var posting = $.post(SERVER_URL + "/search", {
                 "table": "Image",
                 "content": text.val()
             });
         posting.done(function (data) {
-            console.log(data);
+        //    console.log(data);
             var message_list;
             alert('done');
             message_list = data['list'];
@@ -160,8 +187,8 @@ a:hover{
             for (var a = (message_list.length - 1); a >= 0; a--) {
                 var my_tbody = document.getElementById('my-tbody');
                 var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-                console.log(message_list[a]['size']);
-                console.log("jiah");
+            //    console.log(message_list[a]['size']);
+              //  console.log("jiah");
 
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
@@ -255,7 +282,7 @@ a:hover{
         <tbody id="my-tbody"></tbody>
     </table>
     <div id="buttons">
-      <div class="col1">◀ 이전 1 다음 ▶</div>
+        <div class="col1"><table id="page_tb"><tr id="tb_row"><td> </td></tr> </table></div>
       <div class="col2">
         <img src="static/list.png">
         <a href="http://localhost:5000/Board_Write"><img src="static/write.png"></a>

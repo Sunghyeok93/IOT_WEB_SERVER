@@ -70,7 +70,7 @@ def get_frame(imageName, isDB):
 
 def video_gen(cam):
     while True:
-        print("video_gen")
+       # print("video_gen")
         frame = cam.get_frame()
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 # No caching at all for API endpoints.
@@ -101,7 +101,6 @@ def messages():
 # =================VIDEOSTREAM TEST=====================
 @app.route('/videostream', methods=["POST"])  # 아틱-> 서버 : 비디오스트리밍
 def videostream():
-    print('videostrem : 안')
     return Response(status=get_frame("extra/" + get_current_time(), True), mimetype='text/plain')
 
 
@@ -143,14 +142,16 @@ def get_mail():
 def image():
     get_frame('extra/yolo.jpg', False)
     result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/extra/yolo.jpg')
-    if result is not '':
+    if not result:
+        str_result = '인식된 주요 물체가 없습니다'
+    else:
+        print("result" + str(result))
         str_result = ''
         for i in result:
             str_result = str_result + translateEtoK.get(i['class'], '') + ' '
         str_result = str_result + '있습니다'
         print(str_result)
-    else:
-        str_result = '인식된 주요 물체가 없습니다'
+
     return Response(str_result, status=200, mimetype='text/plain')
 
 
@@ -177,6 +178,7 @@ def send_gps():
     finally:
         print(gps)
         return Response(gps, status=200)
+    
 
 @app.route( '/' )
 def hello():

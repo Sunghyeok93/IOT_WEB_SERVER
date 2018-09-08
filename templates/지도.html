@@ -6,17 +6,6 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
         <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=20d0f4ec-fefc-4025-84fa-292675965fab"></script>
         <style>
-            #map_div {
-                display: none;
-            }
-            #map_div.active {
-                display: block;
-            }
-             html, body{height:100%;}
-* {
-    margin:0;
-    padding:0;
-}
 main {
     overflow:hidden;
     width:100%;
@@ -92,17 +81,18 @@ a:hover{
       </ul>
     </main_menu>
 
-  </header>
-     <main>
+     <main onload="initTmap()">
         <div id="map_div"></div>
      </main>
+  </header>
+    
     <footer>
     <img src="static/address.png">
   </footer>
     </body>
     <script type="text/javascript">
             var $console = $("#console");
-            var SERVER_URL = "http://172.30.1.59:1880";
+            var SERVER_URL = "http://54.180.8.155:5000";
 
             function addConsoleRow(type, data) {
                 console.log(data);
@@ -110,16 +100,15 @@ a:hover{
             }
 
             function initTmap(){
-                var get_location = $.get( SERVER_URL + "/file"); //아틱 http 통신
+                var get_location = $.get( SERVER_URL + "/gpsartik"); //아틱 http 통신
                 var latitude;//위도
                 var longitude;//경도
-                alert('aaa');
                 get_location.done(function( data ) {
-                    var data_ary = data.split(/\r\n|\r|\n/);
-                    latitude = data_ary[0];
-                    longitude = data_ary[1];
-                    addConsoleRow("latitude(위도) : ", latitude);
-                    addConsoleRow("longitude(경도) : ", longitude);
+                    var json_data = JSON.parse(data);
+                    latitude = json_data['latitude'];
+                    longitude = json_data['longitude'];
+                    console.log(latitude);
+                    console.log(longitude);
 
                     var map = new Tmap.Map({
 					    div:'map_div',

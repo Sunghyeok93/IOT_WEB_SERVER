@@ -33,7 +33,7 @@ def get_current_time():
     minute = extra.split(':')[1]
     second = extra.split(':')[2]
     
-    return yearMonthDay + "-" + hour + minute + second
+    return yearMonthDay + "-" + hour + minute + second #180901-010101 형태로 전달
  
 
 
@@ -125,7 +125,8 @@ def send_mail():
     isRead = 1
     if sender is 'ARTIK':
         isRead = 0
-    db.insertMessage(strftime("%Y-%m-%d-%H:%M:%S", gmtime()), content, sender, isRead)
+    db.insertMessage(get_current_time(), content, sender, isRead)
+    #db.insertMessage(strftime("%Y-%m-%d-%H:%M:%S", gmtime()), content, sender, isRead)
     return Response(status=200)
 
 @app.route('/voicemail') # 서버 -> 아틱 : 음성받음
@@ -236,20 +237,7 @@ def test():
 
 @app.route('/photobook', methods=["POST"])
 def get_photo():
-    
-    utcnow = datetime.datetime.utcnow()
-    time_gap = datetime.timedelta(hours=9)
-    kor_time = str(utcnow + time_gap) # Kor_time -> %Y-%m-%d %H:%M:%S.%f
-    yearMonthDay = kor_time.split(' ')[0]
-    extra = kor_time.split(' ')[1]
-    extra = extra.split('.')[0]
-    hour = extra.split(':')[0]
-    minute = extra.split(':')[1]
-    second = extra.split(':')[2]
-    
-    kor_time=yearMonthDay + "-" + hour + minute + second
-    
-    return Response(status=get_frame("photo/" + kor_time, True), mimetype='text/plain')
+    return Response(status=get_frame("photo/" + get_current_time(), True), mimetype='text/plain')
 
 @app.route('/search', methods=["POST"]) # * -> 서버 : table, content에 맞는 결과 검색
 def search():

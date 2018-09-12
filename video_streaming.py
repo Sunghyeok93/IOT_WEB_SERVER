@@ -251,7 +251,7 @@ def get_photo():
     
     return Response(status=get_frame("photo/" + kor_time, True), mimetype='text/plain')
 
-@app.route('/search', methods=["POST"])
+@app.route('/search', methods=["POST"]) # * -> 서버 : table, content에 맞는 결과 검색
 def search():
     form_data = request.form
     table = form_data['table']
@@ -262,7 +262,7 @@ def search():
     else:
         return resp.photoResponse(200, resultList)
 
-@app.route('/findobject', methods=["GET"])
+@app.route('/findobject', methods=["GET"]) # 아틱 -> 서버 : 찾으려는 물체의 이름 전달
 def getObjectName():
     form_data = request.form
     object_name = form_data['object']
@@ -272,7 +272,7 @@ def getObjectName():
     print(object_name)
     return Response(object_name, status=200)
 
-@app.route('/findobject', methods=["POST"])
+@app.route('/findobject', methods=["POST"]) # 아틱 -> 서버 -> 아틱 : 물체를 찾을 경우 완성된 문장을 전달, 못찾을 경우 "0" 전달
 def findObject():
     f = open('/home/ubuntu/object_find.txt', 'r')
     object_name = f.readlines()
@@ -288,7 +288,7 @@ def findObject():
     if object_name in str_result:
         str_result = "전방에 " + object_name + " 찾았습니다"
     else:
-        str_result = "0"
+        str_result = "0"   # 찾는 물품이 없을경우 0을 전달함으로써 아틱이 식별할 수 있게끔 해줌
 
     return Response(str_result, status=200, mimetype='text/plain')
 

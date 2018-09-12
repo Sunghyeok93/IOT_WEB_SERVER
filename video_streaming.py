@@ -262,6 +262,37 @@ def search():
     else:
         return resp.photoResponse(200, resultList)
 
+@app.route('/findobject', methods=["GET"])
+def getObjectName():
+    form_data = request.form
+    object_name = form_data['object']
+    f = open('/home/ubuntu/object_find.txt', 'w+')
+    f.write(object_name)
+    f.close
+    print(object_name)
+    return Response(object_name, status=200)
+
+@app.route('/findobject', methods=["POST"])
+def findObject():
+    f = open('/home/ubuntu/object_find.txt', 'r')
+    object_name = f.readlines()
+    f.close()
+
+    get_frame('extra/yolo.jpg', False)
+    result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/extra/yolo.jpg')
+    print("result" + str(result))
+    str_result = ''
+    for i in result:
+        str_result = str_result + translateEtoK.get(i['class'], '') + ' '
+        print(str_result)
+    if object_name in str_result:
+        str_result = "전방에 " + object_name + " 찾았습니다"
+    else:
+        str_result = "0"
+
+    return Response(str_result, status=200, mimetype='text/plain')
+
+
 if __name__ == '__main__':
     db.delete_extra_img()
     try:

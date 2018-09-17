@@ -127,7 +127,7 @@ def send_mail():
         isRead = 0
     db.insertMessage(get_current_time(), content, sender, isRead)
     #db.insertMessage(strftime("%Y-%m-%d-%H:%M:%S", gmtime()), content, sender, isRead)
-    return Response(status=200)
+    return Response('200', status=200, mimetype='text/plain')
 
 @app.route('/voicemail') # 서버 -> 아틱 : 음성받음
 def get_mail():

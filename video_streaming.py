@@ -55,7 +55,6 @@ def get_frame(imageName, isDB):
             return img_name.split('/')[1]
 
     try:
-        print(imageName)
         imageTime = get_time_from_name(imageName)
         imageName = get_img_name(imageName)
         filePath = os.path.join(imagePath, imageName)
@@ -257,25 +256,30 @@ def getObjectName():
     f = open('/home/ubuntu/object_find.txt', 'w+')
     f.write(object_name)
     f.close
-    print(object_name)
     return Response(object_name, status=200)
 
 @app.route('/findobject', methods=["POST"]) # 아틱 -> 서버 -> 아틱 : 물체를 찾을 경우 완성된 문장을 전달, 못찾을 경우 "0" 전달
 def findObject():
     f = open('/home/ubuntu/object_find.txt', 'r')
     object_name = f.readlines()
+    print('object_name[0]: ' + object_name[0])
     f.close()
 
     get_frame('extra/yolo.jpg', False)
     result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/extra/yolo.jpg')
-    print("result" + str(result))
+    print("result : " + str(result))
     str_result = ''
     for i in result:
         str_result = str_result + translateEtoK.get(i['class'], '') + ' '
         print(str_result)
-    if object_name in str_result:
-        str_result = "전방에 " + object_name + " 찾았습니다"
+    print("str_result 타입" + str(type(str_result)))
+    print("object_name[0] 타입" + str(type(object_name[0])))
+    if object_name[0] in str_result:
+        print("물건을 찾은 경우입니다 ###########")
+        str_result = "전방에 " + str(object_name[0]) + " 찾았습니다"
     else:
+        print("물건을 찾지 못한 경우입니다 ################")
+        print(str(object_name[0]) + " " + str_result)
         str_result = "0"   # 찾는 물품이 없을경우 0을 전달함으로써 아틱이 식별할 수 있게끔 해줌
 
     return Response(str_result, status=200, mimetype='text/plain')

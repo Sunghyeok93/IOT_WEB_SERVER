@@ -1,134 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>IOT 이노베이션 </title>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
-        <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=20d0f4ec-fefc-4025-84fa-292675965fab"></script>
-        <style>
-main {
-    overflow:hidden;
-    width:100%;
-    height:60%;
-    float:left;
-}
-footer {
-    height:20%;
-    clear:both;
-    margin-top:20px;
-    background-color:#ffffff;
-}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>IOT 이노베이션 </title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
+    <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=20d0f4ec-fefc-4025-84fa-292675965fab"></script>
+    <link rel="stylesheet" type="text/css" href="static/common.css">
+    <link rel="stylesheet" type="text/css" href="static/board_left.css">
+    <link rel="stylesheet" type="text/css" href="static/board_view_main.css">
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            height: 100%;
+        }
 
-      div.msg_bbl {
-        background-color: #ddd;
-        padding: 5px 10px;
-        border-radius: 10px;
-        color: #555;
-        margin-bottom: 5px;
-      }
-      header {
-    height:20%;
-    background-color:#FFFFFF;
-}
-logo {
-    position:absolute;
-    top:2%;
-    left:50%;
-    transform:translateX(-15%);
-}
-top_menu {
-    position:absolute;
-    top:20px;
-    right:5%;
-    font-size: 0.5em;
-    color:#0B614B;
-}
-main_menu {
-    position:absolute;
-    top:16%;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:1.5em;
-    color:#0B614B;
-    font-weight:bold;
-}
-main_menu li {
-    display:inline;
-    margin-left:30px;
-}
-      a{
-    color:#0B614B;
-    text-decoration:none;
-}
-a:hover{
-    text-decoration:underline;
-   }
-        </style>
-    </head>
-    <body>
-     <header>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            height: 20%;
+            background-color: #FFFFFF;
+        }
+
+        logo {
+            position: absolute;
+            top: 2%;
+            left: 50%;
+            transform: translateX(-15%);
+        }
+
+        top_menu {
+            position: absolute;
+            top: 20px;
+            right: 5%;
+            font-size: 0.5em;
+            color: #0B614B;
+        }
+
+        main_menu {
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #0B614B;
+            font-weight: bold;
+        }
+
+        main_menu li {
+            display: inline;
+            margin-left: 30px;
+        }
+
+        content ul {
+            margin-top: 100px;
+        }
+
+        content li {
+            display: inline;
+            margin-left: 60px;
+        }
+
+        main {
+            position:absolute;
+            left:50%;
+            transform:translateX(-50%);
+            <!-- margin-right: 10%; -->
+            <!-- margin-left: 10%; -->
+
+            width: 80%;
+            height: 80%;
+            float: left;
+        }
+
+        a {
+            color: #0B614B;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #main_img {
+            overflow: scroll;
+            padding-bottom: 20px;
+
+            scrollbar-face-color: #FFFFFF;
+            scrollbar-3dlight-color: #FFFFFF;
+            scrollbar-highlight-color: #FFFFFF;
+            scrollbar-shadow-color: #000000;
+            scrollbar-darkshadow-color: #FFFFFF;
+            scrollbar-arrow-color: #000000;
+            scrollbar-track-color: #FFFFFF;
+        }
+
+    </style>
+</head>
+<script>
+    function button1_click() {
+        location.replace("https://localhost:5000/");
+    }
+
+
+</script>
+</head>
+<body>
+<header>
     <logo>
-        <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
+        <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg"
+                                                                           style="max-width:35%; height:auto;"></a>
     </logo>
 
     <main_menu>
-      <ul>
-          <li>   <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
-          <li>   <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
-          <li>   <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
-          <li>   <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
+        <ul>
+            <li><a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
+            <li><a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
+            <li><a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
+            <li><a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
 
-      </ul>
+        </ul>
     </main_menu>
 
-     <main onload="initTmap()">
-        <div id="map_div"></div>
-     </main>
-  </header>
-    
-    <footer>
-    <img src="static/address.png">
-  </footer>
-    </body>
-    <script type="text/javascript">
-            var $console = $("#console");
-            var SERVER_URL = "http://54.180.8.155:5000";
+</header>
+<main onload="InitTmap()">
+    <div id="map_div"></div>
+</main>
+</body>
+<script type="text/javascript">
+    var SERVER_URL = "http://54.180.8.155:5000"
+    function initTmap(){
+        var get_location = $.get( SERVER_URL + "/gpsartik"); //아틱 http 통신
+        var latitude;//위도
+        var longitude;//경도
+        get_location.done(function( data ) {
+            var json_data = JSON.parse(data);
+            latitude = json_data['latitude'];
+            longitude = json_data['longitude'];
+            console.log(latitude);
+            console.log(longitude);
 
-            function addConsoleRow(type, data) {
-                console.log(data);
-                $console.append("<div>"+ type + " : "+ JSON.stringify(data)+"</div>");
-            }
+            var map = new Tmap.Map({
+                div:'map_div',
+                width : "1200px",
+                height : "600px",
+            });
+            map.setCenter(new Tmap.LonLat(longitude, latitude).transform("EPSG:4326", "EPSG:3857"), 15);
 
-            function initTmap(){
-                var get_location = $.get( SERVER_URL + "/gpsartik"); //아틱 http 통신
-                var latitude;//위도
-                var longitude;//경도
-                get_location.done(function( data ) {
-                    var json_data = JSON.parse(data);
-                    latitude = json_data['latitude'];
-                    longitude = json_data['longitude'];
-                    console.log(latitude);
-                    console.log(longitude);
+            markerLayer = new Tmap.Layer.Markers();//마커 레이어 생성
+            map.addLayer(markerLayer);//map에 마커 레이어 추가
 
-                    var map = new Tmap.Map({
-					    div:'map_div',
-					    width : "934px",
-					    height : "452px",
-				    });
-                    map.setCenter(new Tmap.LonLat(longitude, latitude).transform("EPSG:4326", "EPSG:3857"), 15);
+            var lonlat = new Tmap.LonLat(parseFloat(longitude), parseFloat(latitude)).transform("EPSG:4326", "EPSG:3857");//좌표 설정
+            var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+            var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));//아이콘 중심점 설정
+            var icon = new Tmap.Icon('http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',size, offset);//마커 아이콘 설정
 
-                    markerLayer = new Tmap.Layer.Markers();//마커 레이어 생성
-                    map.addLayer(markerLayer);//map에 마커 레이어 추가
-
-                    var lonlat = new Tmap.LonLat(parseFloat(longitude), parseFloat(latitude)).transform("EPSG:4326", "EPSG:3857");//좌표 설정
-                    var size = new Tmap.Size(24, 38);//아이콘 크기 설정
-                    var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));//아이콘 중심점 설정
-                    var icon = new Tmap.Icon('http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',size, offset);//마커 아이콘 설정
-
-                    marker = new Tmap.Marker(lonlat, icon);//마커 생성
-                    markerLayer.addMarker(marker);//레이어에 마커 추가
-                });
-			}
-            initTmap();
-    </script>
+            marker = new Tmap.Marker(lonlat, icon);//마커 생성
+            markerLayer.addMarker(marker);//레이어에 마커 추가
+        });
+    }
+    initTmap();
+</script>
 </html>

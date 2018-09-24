@@ -204,7 +204,7 @@ def write():
 
 @app.route('/streaming')
 def index():
-    return render_template('스트리밍.html')
+    return render_template('스트리밍2.html')
 
 @app.route('/map')
 def location():

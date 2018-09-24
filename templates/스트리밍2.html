@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
+<meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="static/common.css">
+
+  <link rel="stylesheet" type="text/css" href="static/board_left.css">
+  <link rel="stylesheet" type="text/css" href="static/gallery_list_main.css">
+<style>
+html, body{height:100%;}
+* {
+    margin:0;
+    padding:0;
+}
+header {
+    height:20%;
+    background-color:#FFFFFF;
+}
+logo {
+    position:absolute;
+    top:2%;
+    left:50%;
+    transform:translateX(-15%);
+}
+top_menu {
+    position:absolute;
+    top:20px;
+    right:5%;
+    font-size: 0.5em;
+    color:#0B614B;
+}
+main_menu {
+    position:absolute;
+    top:16%;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:1.5em;
+    color:#0B614B;
+    font-weight:bold;
+}
+main_menu li {
+    display:inline;
+    margin-left:30px;
+}
+
+content ul {
+    margin-top:100px;
+}
+content li {
+    display:inline;
+    margin-left:60px;
+}
+main {
+    position:absolute;
+    margin-left:27%;
+    transform:translateX(-50%);
+    left:45%;
+    width:80%;
+    height:80%;
+    float:left;
+}
+footer {
+    width:100%;
+    height:20%;
+    clear:both;
+    margin-top:30%;
+    background-color:#ffffff;
+    text-align:center;
+    color:#0B614B;
+}
+
+a{
+    color:#0B614B;
+    text-decoration:none;
+}
+a:hover{
+    text-decoration:underline;
+   }
+
+
+</style>
+</head>
+<script>
+    function button1_click(){
+        location.replace("https://localhost:5000/");
+    }
+    url='http://localhost:5000/'; //전역변수 선언
+    var SERVER_URL = "http://54.180.8.155:5000"
+
+    function get_message(){
+        var get_location = $.get( SERVER_URL + "/photos"); // 메시지 리스트
+        var message_list;
+         get_location.done(function( data ) {
+            console.log(data);
+            message_list = data['list'];
+
+             var num=5;
+
+             var page_totalnum=message_list.length/num;//페이지 갯수
+             console.log("page"+page_totalnum);
+
+
+             for(var a=1; a<=page_totalnum+1; a++)
+             {
+                 var row=document.getElementById("tb_row");
+              // var page_tbody=document.getElementById('page_tb');
+                 var column=row.insertCell(a);
+
+                 var s = '<a href="gallery_list?' + a +'">';
+                 s += "&nbsp&nbsp"+a+" ";
+                 s += '</a>';
+             // console.log(s)
+
+                 column.innerHTML=s;
+             }
+
+             //주소 읽기
+             var temp = location.href.split("?");
+             page_num = temp[1] || 1;
+             console.log(page_num);
+
+             // page_num=2;
+             var arr= message_list.slice((page_num-1)*num, page_num*num);
+          // console.log(arr);
+
+            for (var a = (arr.length-1); a>=0; a--){
+                var my_tbody = document.getElementById('my-tbody');
+                var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
+           // console.log(a);
+
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+    var name=message_list[a]['time'];
+   // console.log(name);
+
+    var url="54.180.8.155:5000/";
+
+    var s='<a href="gallery?'+ name + '">';
+    s+=arr[a]['time'];
+    s+='</a>';
+ // cell1.innerHTML = "<a href="http://localhost:5000/Board_View">"+message_list[a]['num']+"</a>";
+
+  cell1.innerHTML=arr[a]['num'];
+    cell1.align = "center";
+     cell2.innerHTML=s;
+     cell2.align="center";
+    cell3.innerHTML=arr[a]['size'];
+    cell3.align = "center";
+
+
+  // $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
+                }
+            status = data['status'];
+
+
+        });
+    };
+
+  function delete_row() {
+    var my_tbody = document.getElementById('my-tbody');
+    if (my_tbody.rows.length < 1) return;
+    // my_tbody.deleteRow(0); // 상단부터 삭제
+    my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
+  }
+
+    function text2() {
+            var text = $("#content_text");
+        // console.log(text);
+
+            var posting = $.post(SERVER_URL + "/search", {
+                "table": "Image",
+                "content": text.val()
+            });
+        posting.done(function (data) {
+        // console.log(data);
+            var message_list;
+            alert('done');
+            message_list = data['list'];
+
+            $('#my-tbody').empty();
+            for (var a = (message_list.length - 1); a >= 0; a--) {
+                var my_tbody = document.getElementById('my-tbody');
+                var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+            // console.log(message_list[a]['size']);
+              // console.log("jiah");
+
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+
+                cell1.innerHTML = message_list[a]['num'];
+                cell1.align = "center";
+                cell2.innerHTML = message_list[a]['time'];
+                cell2.align="center";
+                cell3.innerHTML = message_list[a]['size'];
+                cell3.align = "center";
+
+
+                // $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
+            }
+            status = data['status'];
+
+
+            //location.href='Board_List';
+        });
+    }
+
+  get_message()
+</script>
+
+
+
+    </head>
+    <body>
+     <header>
+    <logo>
+      <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
+    </logo>
+
+    <main_menu>
+      <ul>
+          <li> <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
+          <li> <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
+          <li> <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
+          <li> <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
+
+      </ul>
+    </main_menu>
+
+  </header>
+  <main>
+      <img src="{{ url_for('videostream') }}">
+</main>
+  <footer>
+   <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
+    주소 : 서울시 동작구<br>
+    전화 : 010-000-0000<br>
+    대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
+  </footer>
+</body>
+</html>

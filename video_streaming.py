@@ -160,6 +160,8 @@ def receive_gps():
     lat = request.args.get('latitude', '')
     lon = request.args.get('longitude', '')
     gps = {"latitude":lat, "longitude": lon}
+    print(gps)
+    print('########')
     f = open('/home/ubuntu/gps.txt', 'w+')
     f.write(''.join(json.dumps(gps)))
     f.close
@@ -174,6 +176,7 @@ def send_gps():
         f.close()
     except IOError:
 	# gps 파일 오픈에 실패할 경우 광화문 좌표를 줌
+        print('error!!!! gps.txt can not read')
         gps = '{"longitude": "126.976799", "latitude": "37.574071"}'
     finally:
         print(gps)

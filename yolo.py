@@ -5,15 +5,18 @@ import cv2
 
 
 darknet_path = '/home/ubuntu/pyyolo/darknet'
+
+#"""
 datacfg = '/home/ubuntu/madYolo/coco.data'
 cfgfile = '/home/ubuntu/madYolo/darknet/cfg/yolov3-tiny.cfg'
 weightfile = '/home/ubuntu/madYolo/darknet/yolov3-tiny.weights'
 
-#datacfg = '/home/ubuntu/madYolo/trainYolo/obj.data'
-#cfgfile = '/home/ubuntu/madYolo/trainYolo/yolo-obj.cfg'
-#weightfile = '/home/ubuntu/madYolo/trainYolo/yolo-obj.weight'
+"""
 
-
+datacfg = '/home/ubuntu/madYolo/trainYolo/obj.data'
+cfgfile = '/home/ubuntu/madYolo/trainYolo/yolov3.cfg'
+weightfile = '/home/ubuntu/madYolo/trainYolo/yolov3-tiny_2300.weights'
+#"""
 
 filename = darknet_path + '/data/dog.jpg'
 thresh = 0.45

@@ -121,9 +121,9 @@ def send_mail():
     form_data = request.form
     sender = form_data['sender']
     content = form_data['content']
-    isRead = 1
+    isRead = 0
     if sender is 'ARTIK':
-        isRead = 0
+        isRead = 1
     db.insertMessage(get_current_time(), content, sender, isRead)
     #db.insertMessage(strftime("%Y-%m-%d-%H:%M:%S", gmtime()), content, sender, isRead)
     return Response('200', status=200, mimetype='text/plain')
@@ -134,7 +134,8 @@ def get_mail():
     message_not_read = db.getMessageNotRead()
     if len(message_not_read) is 0:
         return Response("읽지 않은 메시지가 없습니다.", status=200, mimetype='text/plain')
-    message = str(len(message_not_read)) + "개의 메시지가 남았습니다." + "메시지를 읽겠습니다." + str(db.getMessageContent(message_not_read[0][0]))
+    message = str(len(message_not_read)) + "개의 메시지가 있습니다." + "1개의 메시지를 읽겠습니다." + str(db.getMessageContent(message_not_read[0][0])[0])
+    print(message)
     db.modifyMessageIsRead(message_not_read[0][0], 1)
     return Response(message, status=200, mimetype='text/plain')
 

@@ -86,7 +86,7 @@ a:hover{
         location.replace("https://localhost:5000/");
     }
     url='http://localhost:5000/'; //전역변수 선언
-    var SERVER_URL = "http://54.180.8.155:5000"
+    var SERVER_URL = "http://ec2-13-209-77-169.ap-northeast-2.compute.amazonaws.com:5000"
 
     function get_message(){
         var get_location = $.get( SERVER_URL + "/photos"); // 메시지 리스트
@@ -137,7 +137,7 @@ a:hover{
     var name=message_list[a]['time'];
    // console.log(name);
 
-    var url="54.180.8.155:5000/";
+    var url="ec2-13-209-77-169.ap-northeast-2.compute.amazonaws.com:5000/";
 
     var s='<a href="gallery?'+ name + '">';
     s+=arr[a]['time'];

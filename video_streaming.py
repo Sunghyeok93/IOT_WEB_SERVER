@@ -42,11 +42,7 @@ def removeDuplicates(string):
         string[i] = "".join(string[i])
         
     UniqW = Counter(string)
-    if ('심장약' in UniqW) and ('수면제' in UniqW):
-        if UniqW.get('심장약') > UniqW.get('수면제'):
-            del UniqW['수면제']
-        else:
-            del UniqW['심장약']
+
     s = " ".join(UniqW.keys())
     return s
 

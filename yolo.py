@@ -18,9 +18,9 @@ cfgfile = '/home/ubuntu/madYolo/trainYolo/yolov3-tiny.cfg'
 weightfile = '/home/ubuntu/madYolo/trainYolo/yolov3-tiny_2300.weights'
 #"""
 
-datacfg = '/home/ubuntu/madYolo/trainYolo/obj.data'
-cfgfile = '/home/ubuntu/madYolo/trainYolo/yolov3-tiny-training.cfg'
-weightfile = '/home/ubuntu/madYolo/trainYolo/yolov3-tiny-training_10000.weights'
+datacfg = '/home/ubuntu/trained_file/obj.data'
+cfgfile = '/home/ubuntu/trained_file/yolov3-tiny-training.cfg'
+weightfile = '/home/ubuntu/trained_file/yolov3-tiny-training_10000.weights'
 
 
 filename = darknet_path + '/data/dog.jpg'

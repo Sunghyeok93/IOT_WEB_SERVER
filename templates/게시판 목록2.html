@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <meta charset="utf-8">
@@ -8,7 +9,8 @@
     <link rel="stylesheet" type="text/css" href="static/board_left.css">
     <link rel="stylesheet" type="text/css" href="static/board_list_main.css">
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -88,8 +90,6 @@
         a:hover {
             text-decoration: underline;
         }
-
-
     </style>
 </head>
 <script>
@@ -98,7 +98,7 @@
     }
 
     url = 'http://localhost:5000/'; //전역변수 선언
-    var SERVER_URL = "http://ec2-13-209-77-169.ap-northeast-2.compute.amazonaws.com:5000"
+    var SERVER_URL = "http://ec2-13-209-41-196.ap-northeast-2.compute.amazonaws.com:5000"
 
     function get_message() {
         var get_location = $.get(SERVER_URL + "/messages"); // 메시지 리스트
@@ -233,67 +233,86 @@
 
 
 </head>
+
 <body>
-<header>
-    <logo>
-        <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg"
-                                                                              style="max-width:35%; height:auto;"></a>
-    </logo>
+    <header>
+        <logo>
+            <a href="#" onclick="window.location.href='/'; return false;">
+                <img src="static/로고.jpg" style="max-width:35%; height:auto;">
+            </a>
+        </logo>
 
-    <main_menu>
-        <ul>
-            <li><a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
-            <li><a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
-            <li><a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
-            <li><a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
+        <main_menu>
+            <ul>
+                <li>
+                    <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a>
+                </li>
 
-        </ul>
-    </main_menu>
+            </ul>
+        </main_menu>
 
-</header>
-<main>
-    <section id="main">
-        <h2 id="board_title">자유 게시판 </h2>
-        <div id="total_search">
+    </header>
+    <main>
+        <section id="main">
+            <h2 id="board_title">자유 게시판 </h2>
+            <div id="total_search">
 
-            <div id="search">
-                <div id="select_img"><img src="static/select_search.gif"></div>
-                <div id="search_select">
-                    <select>
-                        <option>제목</option>
-                        <option>내용</option>
-                        <option>글쓴이</option>
-                    </select>
+                <div id="search">
+                    <div id="select_img">
+                        <img src="static/select_search.gif">
+                    </div>
+                    <div id="search_select">
+                        <select>
+                            <option>제목</option>
+                            <option>내용</option>
+                            <option>글쓴이</option>
+                        </select>
+                    </div>
+                    <div id="search_input">
+                        <input type="text" id="content_text">
+                    </div>
+                    <div id="search_btn">
+                        <img onclick="text2()" src="static/search_button.gif">
+                    </div>
                 </div>
-                <div id="search_input"><input type="text" id="content_text"></div>
-                <div id="search_btn"><img onclick="text2()" src="static/search_button.gif"></div>
             </div>
-        </div>
-        <table id="tb">
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>일시</th>
-            </tr>
+            <table id="tb">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>일시</th>
+                </tr>
 
 
-            <tbody id="my-tbody"></tbody>
-        </table>
-        <div id="buttons">
-            <div class="col1">◀ 이전 1 다음 ▶</div>
-            <div class="col2">
-                <img src="static/list.png">
-                <a href='Board_Write'><img src="static/write.png"></a>
+                <tbody id="my-tbody"></tbody>
+            </table>
+            <div id="buttons">
+                <div class="col1">◀ 이전 1 다음 ▶</div>
+                <div class="col2">
+                    <img src="static/list.png">
+                    <a href='Board_Write'>
+                        <img src="static/write.png">
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
-</main>
-<footer>
-    <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
-    주소 : 서울시 동작구<br>
-    전화 : 010-000-0000<br>
-    대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
-</footer>
+        </section>
+    </main>
+    <footer>
+        <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
+        주소 : 서울시 동작구
+        <br> 전화 : 010-000-0000
+        <br> 대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
+    </footer>
 </body>
+
 </html>

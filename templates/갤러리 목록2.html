@@ -1,237 +1,264 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
-<meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="static/common.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="static/common.css">
 
   <link rel="stylesheet" type="text/css" href="static/board_left.css">
   <link rel="stylesheet" type="text/css" href="static/gallery_list_main.css">
-<style>
-html, body{height:100%;}
-* {
-    margin:0;
-    padding:0;
-}
-header {
-    height:20%;
-    background-color:#FFFFFF;
-}
-logo {
-    position:absolute;
-    top:2%;
-    left:50%;
-    transform:translateX(-15%);
-}
-top_menu {
-    position:absolute;
-    top:20px;
-    right:5%;
-    font-size: 0.5em;
-    color:#0B614B;
-}
-main_menu {
-    position:absolute;
-    top:16%;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:1.5em;
-    color:#0B614B;
-    font-weight:bold;
-}
-main_menu li {
-    display:inline;
-    margin-left:30px;
-}
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
 
-content ul {
-    margin-top:100px;
-}
-content li {
-    display:inline;
-    margin-left:60px;
-}
-main {
-  margin-right:10%;
-    margin-left:10%;
-    overflow:hidden;
-    width:80%;
-    height:60%;
-    float:left;
-}
-footer {
-    width:100%;
-    height:20%;
-    clear:both;
-    margin-top:5%;
-    background-color:#ffffff;
-    text-align:center;
-    color:#0B614B;
-}
+    * {
+      margin: 0;
+      padding: 0;
+    }
 
-a{
-    color:#0B614B;
-    text-decoration:none;
-}
-a:hover{
-    text-decoration:underline;
-   }
+    header {
+      height: 20%;
+      background-color: #FFFFFF;
+    }
 
+    logo {
+      position: absolute;
+      top: 2%;
+      left: 50%;
+      transform: translateX(-15%);
+    }
 
-</style>
+    top_menu {
+      position: absolute;
+      top: 20px;
+      right: 5%;
+      font-size: 0.5em;
+      color: #0B614B;
+    }
+
+    main_menu {
+      position: absolute;
+      top: 16%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5em;
+      color: #0B614B;
+      font-weight: bold;
+    }
+
+    main_menu li {
+      display: inline;
+      margin-left: 30px;
+    }
+
+    content ul {
+      margin-top: 100px;
+    }
+
+    content li {
+      display: inline;
+      margin-left: 60px;
+    }
+
+    main {
+      margin-right: 10%;
+      margin-left: 10%;
+      overflow: hidden;
+      width: 80%;
+      height: 60%;
+      float: left;
+    }
+
+    footer {
+      width: 100%;
+      height: 20%;
+      clear: both;
+      margin-top: 5%;
+      background-color: #ffffff;
+      text-align: center;
+      color: #0B614B;
+    }
+
+    a {
+      color: #0B614B;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <script>
-    function button1_click(){
-        location.replace("https://localhost:5000/");
-    }
-    url='http://localhost:5000/'; //전역변수 선언
-    var SERVER_URL = "http://ec2-13-209-77-169.ap-northeast-2.compute.amazonaws.com:5000"
+  function button1_click() {
+    location.replace("https://localhost:5000/");
+  }
+  url = 'http://localhost:5000/'; //전역변수 선언
+  var SERVER_URL = "http://ec2-13-209-41-196.ap-northeast-2.compute.amazonaws.com:5000"
 
-    function get_message(){
-        var get_location = $.get( SERVER_URL + "/photos"); // 메시지 리스트
-        var message_list;
-         get_location.done(function( data ) {
-            console.log(data);
-            message_list = data['list'];
-
-
-
-            for (var a = (message_list.length-1); a>=0; a--){
-                var my_tbody = document.getElementById('my-tbody');
-                var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
-                console.log(a);
-
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-
-    var name=message_list[a]['time'];
-    console.log(name);
-
-    var url="ec2-13-209-77-169.ap-northeast-2.compute.amazonaws.com:5000/";
-
-    var s='<a href="gallery?'+ name + '">';
-    console.log('###');
-    console.log(s);
-
-    s+=message_list[a]['time'];
-    s+='</a>';
- //   cell1.innerHTML = "<a href="http://localhost:5000/Board_View">"+message_list[a]['num']+"</a>";
-
-  cell1.innerHTML=message_list[a]['num'];
-    cell1.align = "center";
-     cell2.innerHTML=s;
-     cell2.align="center";
-    cell3.innerHTML=message_list[a]['size'];
-    cell3.align = "center";
+  function get_message() {
+    var get_location = $.get(SERVER_URL + "/photos"); // 메시지 리스트
+    var message_list;
+    get_location.done(function (data) {
+      console.log(data);
+      message_list = data['list'];
 
 
-  //   $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
-                }
-            status = data['status'];
+
+      for (var a = (message_list.length - 1); a >= 0; a--) {
+        var my_tbody = document.getElementById('my-tbody');
+        var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+        console.log(a);
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+
+        var name = message_list[a]['time'];
+        console.log(name);
+
+        var url = "ec2-13-209-41-196.ap-northeast-2.compute.amazonaws.com:5000/";
+
+        var s = '<a href="gallery?' + name + '">';
+        console.log('###');
+        console.log(s);
+
+        s += message_list[a]['time'];
+        s += '</a>';
+        //   cell1.innerHTML = "<a href="http://localhost:5000/Board_View">"+message_list[a]['num']+"</a>";
+
+        cell1.innerHTML = message_list[a]['num'];
+        cell1.align = "center";
+        cell2.innerHTML = s;
+        cell2.align = "center";
+        cell3.innerHTML = message_list[a]['size'];
+        cell3.align = "center";
 
 
-        });
-    };
+        //   $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
+      }
+      status = data['status'];
+
+
+    });
+  };
 
   function delete_row() {
     var my_tbody = document.getElementById('my-tbody');
     if (my_tbody.rows.length < 1) return;
     // my_tbody.deleteRow(0); // 상단부터 삭제
-    my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
+    my_tbody.deleteRow(my_tbody.rows.length - 1); // 하단부터 삭제
   }
 
-    function text2() {
-            var text = $("#content_text");
-            console.log(text);
+  function text2() {
+    var text = $("#content_text");
+    console.log(text);
 
-            var posting = $.post(SERVER_URL + "/search", {
-                "table": "Image",
-                "content": text.val()
-            });
-        posting.done(function (data) {
-            console.log(data);
-            var message_list;
-            alert('done');
-            message_list = data['list'];
+    var posting = $.post(SERVER_URL + "/search", {
+      "table": "Image",
+      "content": text.val()
+    });
+    posting.done(function (data) {
+      console.log(data);
+      var message_list;
+      alert('done');
+      message_list = data['list'];
 
-            $('#my-tbody').empty();
-            for (var a = (message_list.length - 1); a >= 0; a--) {
-                var my_tbody = document.getElementById('my-tbody');
-                var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-                console.log(message_list[a]['size']);
-                console.log("jiah");
+      $('#my-tbody').empty();
+      for (var a = (message_list.length - 1); a >= 0; a--) {
+        var my_tbody = document.getElementById('my-tbody');
+        var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+        console.log(message_list[a]['size']);
+        console.log("jiah");
 
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
 
-                cell1.innerHTML = message_list[a]['num'];
-                cell1.align = "center";
-                cell2.innerHTML = message_list[a]['time'];
-                cell2.align="center";
-                cell3.innerHTML = message_list[a]['size'];
-                cell3.align = "center";
-
-
-                //   $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
-            }
-            status = data['status'];
+        cell1.innerHTML = message_list[a]['num'];
+        cell1.align = "center";
+        cell2.innerHTML = message_list[a]['time'];
+        cell2.align = "center";
+        cell3.innerHTML = message_list[a]['size'];
+        cell3.align = "center";
 
 
-            //location.href='Board_List';
-        });
-    }
+        //   $( 'table.tb' ).append( '<td class="col1"><b style="color: #FFF">'+message_list[a]['num']+'</b>'+'</td>')
+      }
+      status = data['status'];
+
+
+      //location.href='Board_List';
+    });
+  }
 
   get_message()
 </script>
 
 
 
-    </head>
-    <body>
-     <header>
+</head>
+
+<body>
+  <header>
     <logo>
-      <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
+      <a href="#" onclick="window.location.href='/'; return false;">
+        <img src="static/로고.jpg" style="max-width:35%; height:auto;">
+      </a>
     </logo>
 
     <main_menu>
       <ul>
-          <li>   <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
-          <li>   <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
-          <li>   <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
-          <li>   <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
+        <li>
+          <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a>
+        </li>
+        <li>
+          <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a>
+        </li>
+        <li>
+          <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a>
+        </li>
+        <li>
+          <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a>
+        </li>
 
       </ul>
     </main_menu>
 
   </header>
   <main>
-   <section id="main">
-    <h2 id="board_title">사진 게시판 </h2>
-    <div id="total_search">
+    <section id="main">
+      <h2 id="board_title">사진 게시판 </h2>
+      <div id="total_search">
 
-      <div id="search">
-       <!-- <div id="select_img"><img src="static/select_search.gif"></div>-->
-        <!--<div id="search_select">
+        <div id="search">
+          <!-- <div id="select_img"><img src="static/select_search.gif"></div>-->
+          <!--<div id="search_select">
           <select>
             <option>제목</option>
             <option>내용</option>
             <option>글쓴이</option>
           </select>
         </div> -->
-          <div id="search_input"><input type="text" id="content_text"></div>
-        <div id="search_btn"><img onclick="text2()" img src="static/search_button.gif"></div>
+          <div id="search_input">
+            <input type="text" id="content_text">
+          </div>
+          <div id="search_btn">
+            <img onclick="text2()" img src="static/search_button.gif">
+          </div>
+        </div>
       </div>
-    </div>
-    <table id="tb">
-      <tr>
-        <th>번호</th>
-        <th>일시</th>
-        <th>크기</th>
-      </tr>
- <!--     <tr>
+      <table id="tb">
+        <tr>
+          <th>번호</th>
+          <th>일시</th>
+          <th>크기</th>
+        </tr>
+        <!--     <tr>
         <td class="col1">1</td>
         <td class="col2">
           <a href="http://localhost:5000/gallery">2018-08-31</a>
@@ -253,21 +280,24 @@ a:hover{
 
         <td class="col3">10KB</td>-->
         <tbody id="my-tbody"></tbody>
-    </table>
-    <div id="buttons">
-      <div class="col1">◀ 이전 1 다음 ▶</div>
-      <div class="col2">
-        <img src="static/list.png">
-        <a href="http://localhost:5000/Board_Write"><img src="static/write.png"></a>
+      </table>
+      <div id="buttons">
+        <div class="col1">◀ 이전 1 다음 ▶</div>
+        <div class="col2">
+          <img src="static/list.png">
+          <a href="http://localhost:5000/Board_Write">
+            <img src="static/write.png">
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
   <footer>
-   <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
-    주소 : 서울시 동작구<br>
-    전화 : 010-000-0000<br>
-    대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
+    <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
+    주소 : 서울시 동작구
+    <br> 전화 : 010-000-0000
+    <br> 대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
   </footer>
 </body>
+
 </html>

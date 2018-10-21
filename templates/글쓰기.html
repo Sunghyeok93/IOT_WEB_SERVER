@@ -1,148 +1,180 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="static/common.css">
-<link rel="stylesheet" type="text/css" href="static/board_left.css">
-<link rel="stylesheet" type="text/css" href="static/board_write_main.css">
-          <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
+    <link rel="stylesheet" type="text/css" href="static/board_left.css">
+    <link rel="stylesheet" type="text/css" href="static/board_write_main.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
 
-<meta charset="utf-8">
-<style>
-html, body{height:100%;}
-* {
-    margin:0;
-    padding:0;
-}
-header {
-    height:20%;
-    background-color:#FFFFFF;
-}
-logo {
-    position:absolute;
-    top:2%;
-    left:50%;
-    transform:translateX(-15%);
-}
-top_menu {
-    position:absolute;
-    top:20px;
-    right:5%;
-    font-size: 0.5em;
-    color:#0B614B;
-}
-main_menu {
-    position:absolute;
-    top:16%;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:1.5em;
-    color:#0B614B;
-    font-weight:bold;
-}
-main_menu li {
-    display:inline;
-    margin-left:30px;
-}
+    <meta charset="utf-8">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
 
-content ul {
-    margin-top:100px;
-}
-content li {
-    display:inline;
-    margin-left:60px;
-}
-main {
-  margin-right:10%;
-    margin-left:10%;
-    overflow:hidden;
-    width:80%;
-    height:60%;
-    float:left;
-}
-footer {
-    width:100%;
-    height:20%;
-    clear:both;
-    margin-top:5%;
-    background-color:#ffffff;
-    text-align:center;
-    color:#0B614B;
-}
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-a{
-    color:#0B614B;
-    text-decoration:none;
-}
-a:hover{
-    text-decoration:underline;
-   }
+        header {
+            height: 20%;
+            background-color: #FFFFFF;
+        }
 
+        logo {
+            position: absolute;
+            top: 2%;
+            left: 50%;
+            transform: translateX(-15%);
+        }
 
-</style>
+        top_menu {
+            position: absolute;
+            top: 20px;
+            right: 5%;
+            font-size: 0.5em;
+            color: #0B614B;
+        }
+
+        main_menu {
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #0B614B;
+            font-weight: bold;
+        }
+
+        main_menu li {
+            display: inline;
+            margin-left: 30px;
+        }
+
+        content ul {
+            margin-top: 100px;
+        }
+
+        content li {
+            display: inline;
+            margin-left: 60px;
+        }
+
+        main {
+            margin-right: 10%;
+            margin-left: 10%;
+            overflow: hidden;
+            width: 80%;
+            height: 60%;
+            float: left;
+        }
+
+        footer {
+            width: 100%;
+            height: 20%;
+            clear: both;
+            margin-top: 5%;
+            background-color: #ffffff;
+            text-align: center;
+            color: #0B614B;
+        }
+
+        a {
+            color: #0B614B;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <script>
-var SERVER_URL="http://ec2-13-209-77-169.ap-northeast-2.compute.amazonaws.com:5000";
-    function button1_click(){
+    var SERVER_URL = "http://ec2-13-209-41-196.ap-northeast-2.compute.amazonaws.com:5000";
+    function button1_click() {
         location.replace("https://localhost:5000/");
     }
-    function text(){
-      var $text=$("#content_text");
-      console.log(text);
+    function text() {
+        var $text = $("#content_text");
+        console.log(text);
 
-      var posting = $.post(SERVER_URL + "/voicemail", {
-        content : $text.val(),
-        sender : "Homepage"
-      });
-      posting.done(function(data){
-        alert('done');
-        location.href='Board_List';
+        var posting = $.post(SERVER_URL + "/voicemail", {
+            content: $text.val(),
+            sender: "Homepage"
         });
-}
+        posting.done(function (data) {
+            alert('done');
+            location.href = 'Board_List';
+        });
+    }
 </script>
+
 <body>
-  <header>
-    <logo>
-      <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg" style="max-width:35%; height:auto;"></a>
-    </logo>
+    <header>
+        <logo>
+            <a href="#" onclick="window.location.href='/'; return false;">
+                <img src="static/로고.jpg" style="max-width:35%; height:auto;">
+            </a>
+        </logo>
 
-    <main_menu>
-      <ul>
-          <li>   <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
-          <li>   <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
-          <li>   <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
-          <li>   <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
-      </ul>
-    </main_menu>
+        <main_menu>
+            <ul>
+                <li>
+                    <a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a>
+                </li>
+            </ul>
+        </main_menu>
 
-  </header>
-  <main>
-    <section id="main">
+    </header>
+    <main>
+        <section id="main">
 
-  <h2 id="board_title">자유 게시판 </h2>
-  <div id="write_title"><h2>글쓰기</h2></div>
-  <table>
-    <tr id="content">
-      <td class="col1">내용</td>
-      <td class="col2"><textarea id="content_text"></textarea></td>
-    </tr>
+            <h2 id="board_title">자유 게시판 </h2>
+            <div id="write_title">
+                <h2>글쓰기</h2>
+            </div>
+            <table>
+                <tr id="content">
+                    <td class="col1">내용</td>
+                    <td class="col2">
+                        <textarea id="content_text"></textarea>
+                    </td>
+                </tr>
 
 
-    <!-- <tr id="upload">
+                <!-- <tr id="upload">
       <td class="col1">업로드 파일</td>
       <td class="col2"><input type="text"> <input type="file"></td>
     </tr> -->
-  </table>
-  <div id="buttons">
-    <a href="#"><img onclick="text()" src="static/ok.png"></a>
-    <a href='Board_List'><img src="static/list.png"></a>
-  </div>
-</section>
-  </main>
-  <footer>
-   <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
-    주소 : 서울시 동작구<br>
-    전화 : 010-000-0000<br>
-    대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
-  </footer>
+            </table>
+            <div id="buttons">
+                <a href="#">
+                    <img onclick="text()" src="static/ok.png">
+                </a>
+                <a href='Board_List'>
+                    <img src="static/list.png">
+                </a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <!-- <img src="static/address.png" style="max-width=100%; width:100% height:auto"> -->
+        주소 : 서울시 동작구
+        <br> 전화 : 010-000-0000
+        <br> 대표 : 강성혁&nbsp;&nbsp;이메일:secondray@gmail.com
+    </footer>
 </body>
+
 </html>

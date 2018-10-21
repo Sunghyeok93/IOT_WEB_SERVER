@@ -1,12 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="static/common.css">
     <link rel="stylesheet" type="text/css" href="static/board_left.css">
     <link rel="stylesheet" type="text/css" href="static/board_view_main.css">
     <meta charset="utf-8">
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -89,7 +91,6 @@
             scrollbar-arrow-color: #000000;
             scrollbar-track-color: #FFFFFF;
         }
-
     </style>
 </head>
 <script>
@@ -100,56 +101,67 @@
 
 </script>
 </head>
+
 <body onload="showImage()">
-<header>
-    <logo>
-        <a href="#" onclick="window.location.href='/'; return false;"><img src="static/로고.jpg"
-                                                                              style="max-width:35%; height:auto;"></a>
-    </logo>
+    <header>
+        <logo>
+            <a href="#" onclick="window.location.href='/'; return false;">
+                <img src="static/로고.jpg" style="max-width:35%; height:auto;">
+            </a>
+        </logo>
 
-    <main_menu>
-        <ul>
-            <li><a href="#" onclick="window.location.href='map'; return false;">&nbsp; NAVIGATION &nbsp; </a></li>
-            <li><a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; VIDEO &nbsp;</a></li>
-            <li><a href="#" onclick="window.location.href='gallery_list'; return false;"> PICTURE </a></li>
-            <li><a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a></li>
+        <main_menu>
+            <ul>
+                <li>
+                    <a href="#" onclick="window.location.href='map'; return false;">&nbsp; LOCATION &nbsp; </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='streaming'; return false;">&nbsp; STREAMING &nbsp;</a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='gallery_list'; return false;"> PHOTOBOOK </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.location.href='Board_List'; return false;">&nbsp;MESSAGE&nbsp;</a>
+                </li>
 
-        </ul>
-    </main_menu>
+            </ul>
+        </main_menu>
 
-</header>
-<script>
-    function showImage() {
-        url = 'http://localhost:5000/'; //전역변수 선언
+    </header>
+    <script>
+        function showImage() {
+            url = 'http://localhost:5000/'; //전역변수 선언
 
-        var temp = location.href.split("?");
-        data = temp[1];
-        console.log(data);
-        document.getElementById("view_title_box").innerHTML=data;
+            var temp = location.href.split("?");
+            data = temp[1];
+            console.log(data);
+            document.getElementById("view_title_box").innerHTML = data;
 
-        photo_dir = "static/photo/" + data + ".jpg";
-        console.log(photo_dir);
+            photo_dir = "static/photo/" + data + ".jpg";
+            console.log(photo_dir);
 
-        var image = document.getElementsByClassName("main_img");
-        console.log(image[0].src);
-        image[0].src = photo_dir;
-    }
-</script>
-<main>
-    <section id="main">
-        <h2 id="board_title">자유 게시판 </h2>
-        <div id="view_title_box">
-            <span></span>
-        </div>
+            var image = document.getElementsByClassName("main_img");
+            console.log(image[0].src);
+            image[0].src = photo_dir;
+        }
+    </script>
+    <main>
+        <section id="main">
+            <h2 id="board_title">자유 게시판 </h2>
+            <div id="view_title_box">
+                <span></span>
+            </div>
 
-        <p id="view_content">
-            <img class="main_img" width="100%">
+            <p id="view_content">
+                <img class="main_img" width="100%">
 
-        </p>
-        <div id="comment_box">
-        </div>
+            </p>
+            <div id="comment_box">
+            </div>
 
-    </section>
-</main>
+        </section>
+    </main>
 </body>
+
 </html>

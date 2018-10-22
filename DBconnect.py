@@ -35,12 +35,12 @@ class DBconnect():
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
-    def selectPhoto(self):
+    def selectPhotobook(self):
         query = "SELECT * FROM Photo WHERE path LIKE '%photo%';"
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
-    def insertPhoto(self, time, path, size):
+    def insertPhotobook(self, time, path, size):
         query = "INSERT INTO Photo (time, path, size) VALUES ('" + time + "','" + path + "','" + size + "');"
         return self.cursor.execute(query)
 

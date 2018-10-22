@@ -70,10 +70,10 @@ def get_frame(imageName, isDB, isPhotobook=0):
         file = request.files['abc']
         file.save(filePath)
         if isDB is True:
-	    if isStreaming != 0:
-                db.insertImage(imageTime, filePath, str(os.path.getsize(filePath)))
-            else:
+            if isPhotobook != 0:
                 db.insertPhotobook(imageTime, filePath, str(os.path.getsize(filePath)))
+            else:
+                db.insertImage(imageTime, filePath, str(os.path.getsize(filePath)))
     except IOError:
         print("get_frame : 파일 저장 에러")
     return 200
@@ -100,7 +100,7 @@ def add_header(response):
 
 @app.route('/photos')
 def photos():
-    photoList = db.selectPhoto()
+    photoList = db.selectPhotobook()
     return resp.photoResponse(200, photoList)
     
 

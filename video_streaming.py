@@ -131,7 +131,9 @@ def send_mail():
     sender = form_data['sender']
     content = form_data['content']
     isRead = 0
-    if sender is 'ARTIK':
+    print(sender)
+    if sender !=  'Homepage':
+        print("####not arrived")
         isRead = 1
     db.insertMessage(get_current_time(), content, sender, isRead)
     #db.insertMessage(strftime("%Y-%m-%d-%H:%M:%S", gmtime()), content, sender, isRead)
@@ -143,7 +145,7 @@ def get_mail():
     message_not_read = db.getMessageNotRead()
     if len(message_not_read) is 0:
         return Response("읽지 않은 메시지가 없습니다.", status=200, mimetype='text/plain')
-    message = str(len(message_not_read)) + "개의 메시지가 있습니다." + "1개의 메시지를 읽겠습니다." + str(db.getMessageContent(message_not_read[0][0])[0])
+    message = str(len(message_not_read)) + "개의, 메시지가 남았습니다." + "한개의, 메시지를 읽겠습니다." + str(db.getMessageContent(message_not_read[0][0])[0])
     print(message)
     db.modifyMessageIsRead(message_not_read[0][0], 1)
     return Response(message, status=200, mimetype='text/plain')
@@ -301,6 +303,8 @@ def findObject():
 if __name__ == '__main__':
     print('start')
     db.delete_extra_img()
+    filePath = "/home/ubuntu/pyyolo/darknet/data/dog.jpg"
+    #db.insertImage("2018-01-01-000000", filePath, str(os.path.getsize(filePath)))
     try:
         shutil.rmtree("/home/ubuntu/IOT_WEB_SERVER/static/extra")
     except OSError as e:

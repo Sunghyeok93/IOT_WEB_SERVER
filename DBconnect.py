@@ -36,9 +36,13 @@ class DBconnect():
         return self.cursor.fetchall()
 
     def selectPhoto(self):
-        query = "SELECT * FROM Image WHERE path LIKE '%photo%';"
+        query = "SELECT * FROM Photo WHERE path LIKE '%photo%';"
         self.cursor.execute(query)
         return self.cursor.fetchall()
+
+    def insertPhoto(self, time, path, size):
+        query = "INSERT INTO Photo (time, path, size) VALUES ('" + time + "','" + path + "','" + size + "');"
+        return self.cursor.execute(query)
 
     def select_newest_img(self):
         query = 'SELECT time, path, size FROM Image ORDER BY time DESC LIMIT 1 OFFSET 0;'

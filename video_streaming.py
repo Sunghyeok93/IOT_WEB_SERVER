@@ -46,7 +46,7 @@ def removeDuplicates(string):
     s = " ".join(UniqW.keys())
     return s
 
-def get_frame(imageName, isDB):
+def get_frame(imageName, isDB, isPhotobook=0):
 
     def get_img_name(img_name):
         if not isinstance(img_name, str):
@@ -70,7 +70,10 @@ def get_frame(imageName, isDB):
         file = request.files['abc']
         file.save(filePath)
         if isDB is True:
-            db.insertImage(imageTime, filePath, str(os.path.getsize(filePath)))
+	    if isStreaming != 0:
+                db.insertImage(imageTime, filePath, str(os.path.getsize(filePath)))
+            else:
+                db.insertPhotobook(imageTime, filePath, str(os.path.getsize(filePath)))
     except IOError:
         print("get_frame : 파일 저장 에러")
     return 200
@@ -253,7 +256,7 @@ def test():
 
 @app.route('/photobook', methods=["POST"])
 def get_photo():
-    return Response(status=get_frame("photo/" + get_current_time(), True), mimetype='text/plain')
+    return Response(status=get_frame("photo/" + get_current_time(), True,1), mimetype='text/plain')
 
 @app.route('/search', methods=["POST"]) # * -> 서버 : table, content에 맞는 결과 검색
 def search():

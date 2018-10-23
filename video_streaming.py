@@ -256,7 +256,7 @@ def test():
 
 @app.route('/photobook', methods=["POST"])
 def get_photo():
-    return Response(status=get_frame("photo/" + get_current_time(), True,1), mimetype='text/plain')
+    return Response(status=get_frame("photo/" + get_current_time(), True, 1), mimetype='text/plain')
 
 @app.route('/search', methods=["POST"]) # * -> 서버 : table, content에 맞는 결과 검색
 def search():
@@ -284,6 +284,9 @@ def findObject():
     object_name = f.readlines()
     print('object_name[0]: ' + object_name[0])
     f.close()
+
+    #tmp_file = request.files['abc']
+    #tmp_file.save('/home/ubuntu/tmp.jpg')
 
     get_frame('extra/yolo.jpg', False)
     result = detect_image('/home/ubuntu/IOT_WEB_SERVER/static/extra/yolo.jpg')
